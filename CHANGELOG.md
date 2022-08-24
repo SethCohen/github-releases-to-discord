@@ -1,5 +1,12 @@
 # Changelog
 
+## [1.11.1](https://github.com/SethCohen/github-release-to-discord/compare/v1.11.0...v1.11.1) (2022-08-24)
+
+
+### Bug Fixes
+
+* fixed ReferenceError on require  vs import ([233db9c](https://github.com/SethCohen/github-release-to-discord/commit/233db9c33f9059cbe008e61acf7f321e671f352c))
+
 ## [1.11.0](https://github.com/SethCohen/github-release-to-discord/compare/v1.10.1...v1.11.0) (2022-08-24)
 
 
