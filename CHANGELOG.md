@@ -1,5 +1,12 @@
 # Changelog
 
+## [1.12.1](https://github.com/SethCohen/github-release-to-discord/compare/v1.12.0...v1.12.1) (2022-08-24)
+
+
+### Miscellaneous Chores
+
+* release 1.12.1 ([6aea64b](https://github.com/SethCohen/github-release-to-discord/commit/6aea64bf70aca011417fed5000ff080269024a93))
+
 ## [1.12.0](https://github.com/SethCohen/github-release-to-discord/compare/v1.11.1...v1.12.0) (2022-08-24)
 
 
