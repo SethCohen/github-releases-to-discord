@@ -1,5 +1,12 @@
 # Changelog
 
+## [1.2.0](https://github.com/SethCohen/github-release-to-discord/compare/v1.1.0...v1.2.0) (2022-08-24)
+
+
+### Features
+
+* updated action ([b612527](https://github.com/SethCohen/github-release-to-discord/commit/b6125273330075a9f4de3e58f2fc7f52d85d4691))
+
 ## [1.1.0](https://github.com/SethCohen/github-release-to-discord/compare/v1.0.0...v1.1.0) (2022-08-24)
 
 
