@@ -25,9 +25,9 @@ async function run () {
             return core.setFailed('webhook_url not set. Please set it.')
         }
 
-        const content = await getContext()
+        const {body, html_url, version} = await getContext()
 
-        const description = content.body
+        const description = body
             .replace(/### (.*?)\n/g,function (substring) {
                 const newString = substring.slice(4).replace(/(\r\n|\n|\r)/gm, "")
                 return `**__${newString}__**`
@@ -39,19 +39,19 @@ async function run () {
             .replace(/\n\s*\n/g, '\n')
 
         const embedMsg = {
-            title: `Release ${content.version}`,
-            url: content.html_url,
+            title: `Release ${version}`,
+            url: html_url,
             color: color,
             description: description,
         }
 
-        const body = { username: username, avatar_url: avatarUrl, embeds: [embedMsg], }
+        const requestBody = { username: username, avatar_url: avatarUrl, embeds: [embedMsg], }
 
         const url = `${webhookUrl}?wait=true`
 
         fetch(url, {
             method: 'post',
-            body: JSON.stringify(body),
+            body: JSON.stringify(requestBody),
             headers: { 'Content-Type': 'application/json' }
         })
             .then(res => res.json())
