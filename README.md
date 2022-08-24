@@ -1,6 +1,6 @@
-# Github Release To Discord Action
+# GitHub Release To Discord Action
 
-This action parses a github release and posts it to a discord channel via a discord webhook.
+This action parses a GitHub release and posts it to a Discord channel via a Discord webhook.
 ## Configuration
 | Variable    | Required | Default                                                                                                   | Description                                 |
 |-------------|----------|----------------------------------------------------------------------------------------------------------------|---------------------------------------------|
@@ -11,7 +11,7 @@ This action parses a github release and posts it to a discord channel via a disc
 
 
 ## Output
-![output](https://i.imgur.com/fOIu7pC.png)
+![output](https://i.imgur.com/Zf3TXtb.png)
 
 ## Example usage
 
@@ -31,4 +31,7 @@ jobs:
         id: release
         with:
           webhook_url: ${{ secrets.WEBHOOK_URL }}
+          colour: "2105893"
+          username: "Release Changelog"
+          avatar_url: "https://cdn.discordapp.com/avatars/487431320314576937/bd64361e4ba6313d561d54e78c9e7171.png"
 ```
