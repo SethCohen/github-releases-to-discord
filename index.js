@@ -28,13 +28,13 @@ async function run () {
         const content = await getContext()
 
         const description = content.body
-            .replace(/## (.*?)\n/g,function (substring) {
-                const newString = substring.slice(3)
-                return `**${newString}**\n`
-            })
             .replace(/### (.*?)\n/g,function (substring) {
                 const newString = substring.slice(4)
-                return `**__${newString}__**\n`
+                return `**__${newString}__**`
+            })
+            .replace(/## (.*?)\n/g,function (substring) {
+                const newString = substring.slice(3)
+                return `**${newString}**`
             })
 
         const embedMsg = {
