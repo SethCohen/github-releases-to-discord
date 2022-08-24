@@ -1,13 +1,9 @@
-name: 'Hello World'
-description: 'Greet someone and record the time'
+name: Github Releases To Discord
+description: Send automatic styled releases to Discord.
 inputs:
-  who-to-greet:  # id of input
-    description: 'Who to greet'
+  webhook_url:
+    description: Discord's webhook url. Use GH repo secrets.
     required: true
-    default: 'World'
-outputs:
-  time: # id of output
-    description: 'The time we greeted you'
 runs:
   using: 'node16'
   main: 'index.js'
