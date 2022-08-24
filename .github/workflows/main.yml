@@ -1,7 +1,7 @@
 on:
   release:
     types: [published]
-
+name: github-release-to-discord
 jobs:
   github-release-to-discord:
     runs-on: ubuntu-latest
@@ -13,3 +13,6 @@ jobs:
         id: release
         with:
           webhook_url: ${{ secrets.WEBHOOK_URL }}
+          colour: "7766090"
+          username: "tes"
+          avatar_url: "https://i.imgur.com/UPbV3Nx.png"
