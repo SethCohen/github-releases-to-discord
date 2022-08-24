@@ -1,5 +1,13 @@
 # Changelog
 
+## [1.3.0](https://github.com/SethCohen/github-release-to-discord/compare/v1.2.0...v1.3.0) (2022-08-24)
+
+
+### Features
+
+* changed default action colour ([79005b2](https://github.com/SethCohen/github-release-to-discord/commit/79005b23fefce850957d37ba17ebb796dc81f6a1))
+* updated description format ([a1d7a74](https://github.com/SethCohen/github-release-to-discord/commit/a1d7a74af90fcf8c00d341c8c665ca796b18c689))
+
 ## [1.2.0](https://github.com/SethCohen/github-release-to-discord/compare/v1.1.0...v1.2.0) (2022-08-24)
 
 
