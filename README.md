@@ -2,19 +2,8 @@
 A GitHub action that parses a GitHub release and posts it to a Discord channel as a stylized Discord webhook.
 
 ---
-
-## Setup Instructions
-1. Open your **Server Settings** and head into the **Integrations** tab:
-2. Click the "**Create Webhook**" button to create a new webhook!
-   ![](https://support.discord.com/hc/article_attachments/1500000463501/Screen_Shot_2020-12-15_at_4.41.53_PM.png)
-   ![](https://support.discord.com/hc/article_attachments/360101553853/Screen_Shot_2020-12-15_at_4.51.38_PM.png)
-3. Copy the webhook url
-4. Create a new Github repository secret called WEBHOOK_URL and paste the webhook url into it.
-   ![](https://i.imgur.com/hAaNOds.png)
-5. Save the secret.
-6. Add the secret to your action configuration.
-
-And you're done!
+## Output
+![output](https://i.imgur.com/Zf3TXtb.png)
 
 ## Configuration
 
@@ -25,12 +14,9 @@ And you're done!
 | username   | ❌       | "Release Changelog"                                                                                            | String username for webhook.               |
 | avatar_url | ❌       | ["Profile Picture"](https://cdn.discordapp.com/avatars/487431320314576937/bd64361e4ba6313d561d54e78c9e7171.png) | String url to webhook avatar picture.      |
 
-
-## Output
-![output](https://i.imgur.com/Zf3TXtb.png)
-
 ## Example Usage
 
+`.github/workflows/github-release-to-discord.yml`
 ```yaml
 on:
   release:
@@ -50,3 +36,16 @@ jobs:
           username: "Release Changelog"
           avatar_url: "https://cdn.discordapp.com/avatars/487431320314576937/bd64361e4ba6313d561d54e78c9e7171.png"
 ```
+
+## Setup Instructions
+1. Open your **Server Settings** and head into the **Integrations** tab:
+2. Click the "**Create Webhook**" button to create a new webhook!
+   ![](https://support.discord.com/hc/article_attachments/1500000463501/Screen_Shot_2020-12-15_at_4.41.53_PM.png)
+   ![](https://support.discord.com/hc/article_attachments/360101553853/Screen_Shot_2020-12-15_at_4.51.38_PM.png)
+3. Copy the webhook url
+4. Create a new Github repository secret called WEBHOOK_URL and paste the webhook url into it.
+   ![](https://i.imgur.com/hAaNOds.png)
+5. Save the secret.
+6. Add the secret to your action configuration.
+
+And you're done! Whenever you create a new release, the workflow should run and, if properly setup, post to your specified Discord channel.
