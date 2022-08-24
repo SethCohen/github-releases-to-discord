@@ -1,5 +1,12 @@
 # Changelog
 
+## [1.10.0](https://github.com/SethCohen/github-release-to-discord/compare/v1.9.0...v1.10.0) (2022-08-24)
+
+
+### Features
+
+* added dependencies and removed `.idea` ([fd59991](https://github.com/SethCohen/github-release-to-discord/commit/fd59991cc10608712b6e30a81f3cf0358c7dcf9d))
+
 ## [1.9.0](https://github.com/SethCohen/github-release-to-discord/compare/v1.8.0...v1.9.0) (2022-08-24)
 
 
