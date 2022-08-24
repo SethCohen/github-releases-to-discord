@@ -1,5 +1,12 @@
 # Changelog
 
+## [1.10.1](https://github.com/SethCohen/github-release-to-discord/compare/v1.10.0...v1.10.1) (2022-08-24)
+
+
+### Bug Fixes
+
+* fixed `fetch` import ([0e4e0d8](https://github.com/SethCohen/github-release-to-discord/commit/0e4e0d83ffff90cef7bfae09cee4eb03aa1623d7))
+
 ## [1.10.0](https://github.com/SethCohen/github-release-to-discord/compare/v1.9.0...v1.10.0) (2022-08-24)
 
 
