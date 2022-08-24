@@ -36,6 +36,7 @@ async function run () {
                 const newString = substring.slice(3)
                 return `**${newString}**`
             })
+            .replace(/(\r\n|\n|\r)/gm, "\n")
 
         const embedMsg = {
             title: `Release ${content.version}`,
