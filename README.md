@@ -1,7 +1,23 @@
 # GitHub Release To Discord Action
+A GitHub action that parses a GitHub release and posts it to a Discord channel as a stylized Discord webhook.
 
-This action parses a GitHub release and posts it to a Discord channel via a Discord webhook.
+---
+
+## Setup Instructions
+1. Open your **Server Settings** and head into the **Integrations** tab:
+2. Click the "**Create Webhook**" button to create a new webhook!
+   ![](https://support.discord.com/hc/article_attachments/1500000463501/Screen_Shot_2020-12-15_at_4.41.53_PM.png)
+   ![](https://support.discord.com/hc/article_attachments/360101553853/Screen_Shot_2020-12-15_at_4.51.38_PM.png)
+3. Copy the webhook url
+4. Create a new Github repository secret called WEBHOOK_URL and paste the webhook url into it.
+   ![](https://i.imgur.com/hAaNOds.png)
+5. Save the secret.
+6. Add the secret to your action configuration.
+
+And you're done!
+
 ## Configuration
+
 | Variable   | Required | Default                                                                                                   | Description                                |
 |------------|----------|----------------------------------------------------------------------------------------------------------------|--------------------------------------------|
 | webhook_url | ✔      |                                                                                                                | Discord's webhook url. Use GH repo secrets. |
@@ -13,7 +29,7 @@ This action parses a GitHub release and posts it to a Discord channel via a Disc
 ## Output
 ![output](https://i.imgur.com/Zf3TXtb.png)
 
-## Example usage
+## Example Usage
 
 ```yaml
 on:
@@ -26,9 +42,8 @@ jobs:
     steps:
       - name: Checkout
         uses: actions/checkout@v3
-      - name: Handle Release
-        uses: ./ # Uses an action in the root directory
-        id: release
+      - name: Github Releases To Discord
+        uses: SethCohen/github-release-to-discord@v1.12.0
         with:
           webhook_url: ${{ secrets.WEBHOOK_URL }}
           color: "2105893"
