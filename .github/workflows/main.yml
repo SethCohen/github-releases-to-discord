@@ -13,6 +13,6 @@ jobs:
         id: release
         with:
           webhook_url: ${{ secrets.WEBHOOK_URL }}
-          colour: "7766090"
-          username: "tes"
-          avatar_url: "https://i.imgur.com/UPbV3Nx.png"
+          colour: "2105893"
+          username: "Release Changelog"
+          avatar_url: "https://cdn.discordapp.com/avatars/487431320314576937/bd64361e4ba6313d561d54e78c9e7171.png"
