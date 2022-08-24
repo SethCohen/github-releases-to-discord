@@ -1,5 +1,12 @@
 # Changelog
 
+## [1.8.0](https://github.com/SethCohen/github-release-to-discord/compare/v1.7.0...v1.8.0) (2022-08-24)
+
+
+### Features
+
+* updated action description format ([9c4c902](https://github.com/SethCohen/github-release-to-discord/commit/9c4c90246562bad1531cf41d44d3c037fbf869ee))
+
 ## [1.7.0](https://github.com/SethCohen/github-release-to-discord/compare/v1.6.0...v1.7.0) (2022-08-24)
 
 
