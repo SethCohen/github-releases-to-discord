@@ -27,11 +27,21 @@ async function run () {
 
         const content = await getContext()
 
+        const description = content.body
+            .replace(/## (.*?)\n/g,function (substring) {
+                const newString = substring.slice(3)
+                return `**${newString}**\n`
+            })
+            .replace(/### (.*?)\n/g,function (substring) {
+                const newString = substring.slice(4)
+                return `**__${newString}__**\n`
+            })
+
         const embedMsg = {
             title: `Release ${content.version}`,
             url: content.html_url,
             color: colour,
-            description: content.body,
+            description: description,
         }
 
         const body = { username: username, avatar_url: avatarUrl, embeds: [embedMsg], }
