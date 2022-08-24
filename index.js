@@ -27,24 +27,11 @@ async function run () {
 
         const content = await getContext()
 
-        let description = '';
-        for (const line of content.body) {
-            if (line.startsWith('## ')) {
-                description += `**${line.slice(3)}**\n`;
-            }
-            else if (line.startsWith('### ')) {
-                description += `**__${line.slice(4)}__**\n`;
-            }
-            else if (line.startsWith('* ')) {
-                description += `- ${line.slice(2)}\n`;
-            }
-        }
-
         const embedMsg = {
             title: `Release ${content.version}`,
             url: content.html_url,
             color: colour,
-            description: description,
+            description: content.body,
         }
 
         const body = { username: username, avatar_url: avatarUrl, embeds: [embedMsg], }
