@@ -1,5 +1,18 @@
 # Changelog
 
+## [1.11.0](https://github.com/SethCohen/github-release-to-discord/compare/v1.10.1...v1.11.0) (2022-08-24)
+
+
+### Features
+
+* updated `action.yml` ([e49c674](https://github.com/SethCohen/github-release-to-discord/commit/e49c674890cd5309d63bf570a550ffa0361c9ebc))
+* updated `package.json` ([aea0a60](https://github.com/SethCohen/github-release-to-discord/commit/aea0a60ccd2456ae24e6ce7f21c1622a1b3ee18f))
+
+
+### Bug Fixes
+
+* fixed version tag ([baa4c82](https://github.com/SethCohen/github-release-to-discord/commit/baa4c82901455b2fbc18187cfa8f74f2a171f033))
+
 ## [1.10.0](https://github.com/SethCohen/github-release-to-discord/compare/v1.9.0...v1.10.0) (2022-08-24)
 
 
