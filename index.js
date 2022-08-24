@@ -29,11 +29,11 @@ async function run () {
 
         const description = content.body
             .replace(/### (.*?)\n/g,function (substring) {
-                const newString = substring.slice(4)
+                const newString = substring.slice(4).replace(/(\r\n|\n|\r)/gm, "")
                 return `**__${newString}__**`
             })
             .replace(/## (.*?)\n/g,function (substring) {
-                const newString = substring.slice(3)
+                const newString = substring.slice(3).replace(/(\r\n|\n|\r)/gm, "")
                 return `**${newString}**`
             })
             .replace(/\n\s*\n/g, '\n')
