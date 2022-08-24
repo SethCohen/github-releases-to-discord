@@ -7,7 +7,7 @@ inputs:
   colour:
     description: Decimal colour value for embed.
     required: false
-    default: '0'
+    default: '202225'
   username:
     description: String username for webhook.
     required: false
