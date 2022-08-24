@@ -5,8 +5,8 @@ inputs:
   webhook_url:
     description: Discord's webhook url. Use GH repo secrets.
     required: true
-  colour:
-    description: Decimal colour value for embed.
+  color:
+    description: Decimal color value for embed.
     required: false
     default: '2105893'
   username:

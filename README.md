@@ -2,12 +2,12 @@
 
 This action parses a GitHub release and posts it to a Discord channel via a Discord webhook.
 ## Configuration
-| Variable    | Required | Default                                                                                                   | Description                                 |
-|-------------|----------|----------------------------------------------------------------------------------------------------------------|---------------------------------------------|
+| Variable   | Required | Default                                                                                                   | Description                                |
+|------------|----------|----------------------------------------------------------------------------------------------------------------|--------------------------------------------|
 | webhook_url | ✔      |                                                                                                                | Discord's webhook url. Use GH repo secrets. |
-| colour      | ❌       | "2105893"                                                                                                      | Decimal colour value for embed.             |
-| username    | ❌       | "Release Changelog"                                                                                            | String username for webhook.                |
-| avatar_url  | ❌       | ["Profile Picture"](https://cdn.discordapp.com/avatars/487431320314576937/bd64361e4ba6313d561d54e78c9e7171.png) | String url to webhook avatar picture.       |
+| color      | ❌       | "2105893"                                                                                                      | Decimal color value for embed.             |
+| username   | ❌       | "Release Changelog"                                                                                            | String username for webhook.               |
+| avatar_url | ❌       | ["Profile Picture"](https://cdn.discordapp.com/avatars/487431320314576937/bd64361e4ba6313d561d54e78c9e7171.png) | String url to webhook avatar picture.      |
 
 
 ## Output
@@ -31,7 +31,7 @@ jobs:
         id: release
         with:
           webhook_url: ${{ secrets.WEBHOOK_URL }}
-          colour: "2105893"
+          color: "2105893"
           username: "Release Changelog"
           avatar_url: "https://cdn.discordapp.com/avatars/487431320314576937/bd64361e4ba6313d561d54e78c9e7171.png"
 ```

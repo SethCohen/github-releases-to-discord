@@ -17,7 +17,7 @@ async function getContext () {
 async function run () {
     try {
         const webhookUrl = core.getInput('webhook_url')
-        const colour = core.getInput('colour')
+        const color = core.getInput('color')
         const username = core.getInput('username')
         const avatarUrl = core.getInput('avatar_url')
 
@@ -41,7 +41,7 @@ async function run () {
         const embedMsg = {
             title: `Release ${content.version}`,
             url: content.html_url,
-            color: colour,
+            color: color,
             description: description,
         }
 
