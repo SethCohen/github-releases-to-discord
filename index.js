@@ -1,6 +1,5 @@
 const core = require('@actions/core');
 const github = require('@actions/github');
-
 const fetch = require('node-fetch')
 
 async function getContext () {
@@ -18,6 +17,9 @@ async function getContext () {
 async function run () {
     try {
         const webhookUrl = core.getInput('webhook_url')
+        const colour = core.getInput('colour')
+        const username = core.getInput('username')
+        const avatarUrl = core.getInput('avatar_url')
 
         if (!webhookUrl) {
             return core.setFailed('webhook_url not set. Please set it.')
@@ -26,13 +28,13 @@ async function run () {
         const content = await getContext()
 
         const embedMsg = {
-            color: 3447003,
             title: `Release ${content.version}`,
+            url: content.html_url,
+            color: colour,
             description: content.body,
-            url: content.html_url
         }
 
-        const body = { embeds: [embedMsg] }
+        const body = { username: username, avatar_url: avatarUrl, embeds: [embedMsg], }
 
         const url = `${webhookUrl}?wait=true`
 
