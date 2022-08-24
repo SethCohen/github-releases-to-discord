@@ -1,5 +1,12 @@
 # Changelog
 
+## [1.12.0](https://github.com/SethCohen/github-release-to-discord/compare/v1.11.1...v1.12.0) (2022-08-24)
+
+
+### Features
+
+* renamed all `colour`>`color` ([a0914f4](https://github.com/SethCohen/github-release-to-discord/commit/a0914f433a5c2a2626ca39637851235fd4f7adea))
+
 ## [1.11.1](https://github.com/SethCohen/github-release-to-discord/compare/v1.11.0...v1.11.1) (2022-08-24)
 
 
