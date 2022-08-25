@@ -1,4 +1,4 @@
-# GitHub Release To Discord Action
+# GitHub Releases To Discord Action
 A GitHub action that parses a GitHub release and posts it to a Discord channel as a stylized Discord webhook.
 
 ---

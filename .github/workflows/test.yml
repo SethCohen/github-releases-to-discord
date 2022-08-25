@@ -8,7 +8,7 @@ jobs:
     steps:
       - name: Checkout
         uses: actions/checkout@v3
-      - name: Github Release To Discord
+      - name: Github Releases To Discord
         uses: ./ # Uses an action in the root directory
         with:
           webhook_url: ${{ secrets.WEBHOOK_URL }}

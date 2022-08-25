@@ -1,7 +1,7 @@
 {
-  "name": "github-release-to-discord",
+  "name": "github-releases-to-discord",
   "version": "1.13.0",
-  "description": "Github Action that parses a release and sends it to a Discord channel",
+  "description": "A GitHub Action that automatically sends a stylized Discord webhook of a GitHub Release description to a specified Discord channel.",
   "type": "module",
   "main": "index.js",
   "scripts": {
@@ -20,9 +20,9 @@
   ],
   "author": "SethCohen",
   "bugs": {
-    "url": "https://github.com/SethCohen/github-release-to-discord/issues"
+    "url": "https://github.com/SethCohen/github-releases-to-discord/issues"
   },
-  "homepage": "https://github.com/SethCohen/github-release-to-discord#readme",
+  "homepage": "https://github.com/SethCohen/github-releases-to-discord#readme",
   "license": "MIT",
   "dependencies": {
     "@actions/core": "^1.9.1",
