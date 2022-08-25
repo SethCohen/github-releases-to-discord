@@ -3,7 +3,7 @@ on:
     types: [published]
 name: test-action
 jobs:
-  github-release-to-discord:
+  github-releases-to-discord:
     runs-on: ubuntu-latest
     steps:
       - name: Checkout
