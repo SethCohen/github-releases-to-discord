@@ -1,5 +1,12 @@
 # Changelog
 
+## [1.13.0](https://github.com/SethCohen/github-release-to-discord/compare/v1.12.1...v1.13.0) (2022-08-25)
+
+
+### Features
+
+* created test action ([d76d7aa](https://github.com/SethCohen/github-release-to-discord/commit/d76d7aafe49eadfc8d388bef38a8d3fb0230041b))
+
 ## [1.12.1](https://github.com/SethCohen/github-release-to-discord/compare/v1.12.0...v1.12.1) (2022-08-24)
 
 
