@@ -2,6 +2,31 @@ import core from '@actions/core';
 import github from '@actions/github';
 import fetch from 'node-fetch';
 
+/**
+ * Stylizes a markdown body into an appropriate embed message style.
+ *  H3s converted to bold and underlined.
+ *  H2s converted to bold.
+ *  Redundant whitespace and newlines removed.
+ * @param description
+ * @returns {*}
+ */
+const formatDescription = (description) => {
+    return description
+        .replace(/### (.*?)\n/g,function (substring) {
+            const newString = substring.slice(4).replace(/(\r\n|\n|\r)/gm, "")
+            return `**__${newString}__**`
+        })
+        .replace(/## (.*?)\n/g,function (substring) {
+            const newString = substring.slice(3).replace(/(\r\n|\n|\r)/gm, "")
+            return `**${newString}**`
+        })
+        .replace(/\n\s*\n/g, '\n')
+}
+
+/**
+ * Get the context of the action, returns a GitHub Release payload.
+ * @returns {Promise<{html_url, body: (*|string), version: string}>}
+ */
 async function getContext () {
     const payload = github.context.payload
 
@@ -14,52 +39,47 @@ async function getContext () {
     }
 }
 
+/**
+ * Handles the action.
+ * Get inputs, creates a stylized response webhook, and sends it to the channel.
+ * @returns {Promise<void>}
+ */
 async function run () {
-    try {
-        const webhookUrl = core.getInput('webhook_url')
-        const color = core.getInput('color')
-        const username = core.getInput('username')
-        const avatarUrl = core.getInput('avatar_url')
+    const webhookUrl = core.getInput('webhook_url')
+    const color = core.getInput('color')
+    const username = core.getInput('username')
+    const avatarUrl = core.getInput('avatar_url')
 
-        if (!webhookUrl) {
-            return core.setFailed('webhook_url not set. Please set it.')
-        }
+    if (!webhookUrl) return core.setFailed('webhook_url not set. Please set it.')
 
-        const {body, html_url, version} = await getContext()
+    const {body, html_url, version} = await getContext()
 
-        const description = body
-            .replace(/### (.*?)\n/g,function (substring) {
-                const newString = substring.slice(4).replace(/(\r\n|\n|\r)/gm, "")
-                return `**__${newString}__**`
-            })
-            .replace(/## (.*?)\n/g,function (substring) {
-                const newString = substring.slice(3).replace(/(\r\n|\n|\r)/gm, "")
-                return `**${newString}**`
-            })
-            .replace(/\n\s*\n/g, '\n')
+    const description = formatDescription(body)
 
-        const embedMsg = {
-            title: `Release ${version}`,
-            url: html_url,
-            color: color,
-            description: description,
-        }
-
-        const requestBody = { username: username, avatar_url: avatarUrl, embeds: [embedMsg], }
-
-        const url = `${webhookUrl}?wait=true`
-
-        fetch(url, {
-            method: 'post',
-            body: JSON.stringify(requestBody),
-            headers: { 'Content-Type': 'application/json' }
-        })
-            .then(res => res.json())
-            .then(data => core.info(JSON.stringify(data)))
-            .catch(err => core.info(err))
-    } catch (error) {
-        core.setFailed(error.message)
+    const embedMsg = {
+        title: `Release ${version}`,
+        url: html_url,
+        color: color,
+        description: description
     }
+
+    const requestBody = {
+        username: username,
+        avatar_url: avatarUrl,
+        embeds: [embedMsg]
+    }
+
+    const url = `${webhookUrl}?wait=true`
+    fetch(url, {
+        method: 'post',
+        body: JSON.stringify(requestBody),
+        headers: { 'Content-Type': 'application/json' }
+    })
+        .then(res => res.json())
+        .then(data => core.info(JSON.stringify(data)))
+        .catch(err => core.info(err))
 }
 
 run()
+    .then(() => {core.info('Action completed successfully')})
+    .catch(err => {core.setFailed(err.message)})
