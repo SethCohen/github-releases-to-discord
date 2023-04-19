@@ -58,7 +58,7 @@ async function run () {
 
     const description = formatDescription(body);
 
-    const embedMsg = {
+    let embedMsg = {
         title: name,
         url: html_url,
         color: color,
@@ -66,14 +66,15 @@ async function run () {
 
     }
 
+    if (footerTitle != '') embedMsg.footer.text = {text: footerTitle};
+    if (footerIconUrl != '') embedMsg.footer.icon_url = footerIconUrl;
+
     let requestBody = {
         embeds: [embedMsg]
     }
 
     if (username != '') requestBody.username = username;
     if (avatarUrl != '') requestBody.avatar_url = avatarUrl;
-    if (footerTitle != '') embedMsg.footer.text = {text: footerTitle};
-    if (footerIconUrl != '') embedMsg.footer.icon_url = footerIconUrl;
 
     const url = `${webhookUrl}?wait=true`;
     fetch(url, {
