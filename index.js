@@ -25,7 +25,7 @@ const formatDescription = (description) => {
 
 /**
  * Get the context of the action, returns a GitHub Release payload.
- * @returns {Promise<{html_url, body: (*|string), version: string}>}
+ * @returns {Promise<{html_url, body: (*|string), name: string}>}
  */
 async function getContext () {
     const payload = github.context.payload
@@ -34,7 +34,7 @@ async function getContext () {
         body: payload.release.body.length < 1500
             ? payload.release.body
             : payload.release.body.substring(0, 1500) + ` ([...](${payload.release.html_url}))`,
-        version: payload.release.tag_name,
+            name: payload.release.name,
         html_url: payload.release.html_url
     }
 }
@@ -52,12 +52,12 @@ async function run () {
 
     if (!webhookUrl) return core.setFailed('webhook_url not set. Please set it.')
 
-    const {body, html_url, version} = await getContext()
+    const {body, html_url, name} = await getContext()
 
     const description = formatDescription(body)
 
     const embedMsg = {
-        title: `Release ${version}`,
+        title: name,
         url: html_url,
         color: color,
         description: description
