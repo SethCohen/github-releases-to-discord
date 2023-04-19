@@ -62,7 +62,8 @@ async function run () {
         title: name,
         url: html_url,
         color: color,
-        description: description
+        description: description,
+        footer: {}
 
     }
 
