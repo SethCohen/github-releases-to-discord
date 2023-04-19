@@ -28,7 +28,7 @@ const formatDescription = (description) => {
  * @returns {Promise<{html_url, body: (*|string), name: string}>}
  */
 async function getContext () {
-    const payload = github.context.payload
+    const payload = github.context.payload;
 
     return {
         body: payload.release.body.length < 1500
@@ -45,31 +45,33 @@ async function getContext () {
  * @returns {Promise<void>}
  */
 async function run () {
-    const webhookUrl = core.getInput('webhook_url')
-    const color = core.getInput('color')
-    const username = core.getInput('username')
-    const avatarUrl = core.getInput('avatar_url')
+    const webhookUrl = core.getInput('webhook_url');
+    const color = core.getInput('color');
+    const username = core.getInput('username');
+    const avatarUrl = core.getInput('avatar_url');
 
-    if (!webhookUrl) return core.setFailed('webhook_url not set. Please set it.')
+    if (!webhookUrl) return core.setFailed('webhook_url not set. Please set it.');
 
-    const {body, html_url, name} = await getContext()
+    const {body, html_url, name} = await getContext();
 
-    const description = formatDescription(body)
+    const description = formatDescription(body);
 
     const embedMsg = {
         title: name,
         url: html_url,
         color: color,
         description: description
+
     }
 
-    const requestBody = {
-        username: username,
-        avatar_url: avatarUrl,
+    let requestBody = {
         embeds: [embedMsg]
     }
 
-    const url = `${webhookUrl}?wait=true`
+    if (username) requestBody.username = username;
+    if (avatarUrl) requestBody.avatar_url = avatarUrl;
+
+    const url = `${webhookUrl}?wait=true`;
     fetch(url, {
         method: 'post',
         body: JSON.stringify(requestBody),
