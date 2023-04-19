@@ -49,6 +49,8 @@ async function run () {
     const color = core.getInput('color');
     const username = core.getInput('username');
     const avatarUrl = core.getInput('avatar_url');
+    const footerTitle = core.getInput('footer_title');
+    const footerIconUrl = core.getInput('footer_icon_url');
 
     if (!webhookUrl) return core.setFailed('webhook_url not set. Please set it.');
 
@@ -70,6 +72,8 @@ async function run () {
 
     if (username != '') requestBody.username = username;
     if (avatarUrl != '') requestBody.avatar_url = avatarUrl;
+    if (footerTitle != '') embedMsg.footer.text = {text: footerTitle};
+    if (footerIconUrl != '') embedMsg.footer.icon_url = footerIconUrl;
 
     const url = `${webhookUrl}?wait=true`;
     fetch(url, {
