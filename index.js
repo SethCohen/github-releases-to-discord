@@ -64,10 +64,9 @@ async function run () {
         color: color,
         description: description,
         footer: {}
-
     }
 
-    if (footerTitle != '') embedMsg.footer.text = {text: footerTitle};
+    if (footerTitle != '') embedMsg.footer.text = footerTitle;
     if (footerIconUrl != '') embedMsg.footer.icon_url = footerIconUrl;
 
     let requestBody = {
