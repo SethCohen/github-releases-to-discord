@@ -21,6 +21,9 @@ inputs:
   footer_icon_url:
     description: Icon url for the footer.
     required: false
+  footer_timestamp:
+    description: Timestamp for the footer.
+    required: false
 runs:
   using: 'node16'
   main: 'index.js'

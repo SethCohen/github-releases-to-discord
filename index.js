@@ -51,6 +51,7 @@ async function run () {
     const avatarUrl = core.getInput('avatar_url');
     const footerTitle = core.getInput('footer_title');
     const footerIconUrl = core.getInput('footer_icon_url');
+    const footerTimestamp = core.getInput('footer_timestamp');
 
     if (!webhookUrl) return core.setFailed('webhook_url not set. Please set it.');
 
@@ -68,6 +69,7 @@ async function run () {
 
     if (footerTitle != '') embedMsg.footer.text = footerTitle;
     if (footerIconUrl != '') embedMsg.footer.icon_url = footerIconUrl;
+    if (footerTimestamp == 'true') embedMsg.timestamp = new Date().toISOString();
 
     let requestBody = {
         embeds: [embedMsg]
