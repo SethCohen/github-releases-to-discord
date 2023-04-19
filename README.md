@@ -13,6 +13,7 @@ A GitHub action that parses a GitHub release and posts it to a Discord channel a
 | color           | ❌       | "2105893"                                                                                                      | Decimal color value for embed.             |
 | username        | ❌       |                                                                                                                | String username for webhook.               |
 | avatar_url      | ❌       |                                                                                                                | String url to webhook avatar picture.      |
+| content         | ❌       |                                                                                                                | String content for webhook.                |
 | footer_title    | ❌       |                                                                                                                | String title for the webhook footer.       |
 | footer_icon_url | ❌       |                                                                                                                | String url for the webhook footer picture. |
 | footer_timestamp| ❌       |                                                                                                                | Boolean to enable footer timestamp.        |
@@ -38,8 +39,10 @@ jobs:
           color: "2105893"
           username: "Release Changelog"
           avatar_url: "https://cdn.discordapp.com/avatars/487431320314576937/bd64361e4ba6313d561d54e78c9e7171.png"
+          content: "||@everyone||"
           footer_title: "Changelog"
           footer_icon_url: "https://cdn.discordapp.com/avatars/487431320314576937/bd64361e4ba6313d561d54e78c9e7171.png"
+          footer_timestamp: true
 ```
 
 ## Setup Instructions

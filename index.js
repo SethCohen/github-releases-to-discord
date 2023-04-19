@@ -49,6 +49,7 @@ async function run () {
     const color = core.getInput('color');
     const username = core.getInput('username');
     const avatarUrl = core.getInput('avatar_url');
+    const content = core.getInput('content');
     const footerTitle = core.getInput('footer_title');
     const footerIconUrl = core.getInput('footer_icon_url');
     const footerTimestamp = core.getInput('footer_timestamp');
@@ -77,6 +78,7 @@ async function run () {
 
     if (username != '') requestBody.username = username;
     if (avatarUrl != '') requestBody.avatar_url = avatarUrl;
+    if (content != '') requestBody.content = content;
 
     const url = `${webhookUrl}?wait=true`;
     fetch(url, {
