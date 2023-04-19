@@ -12,11 +12,9 @@ inputs:
   username:
     description: String username for webhook.
     required: false
-    default: 'Release Changelog'
   avatar_url:
     description: String url to webhook avatar picture.
     required: false
-    default: 'https://cdn.discordapp.com/avatars/487431320314576937/bd64361e4ba6313d561d54e78c9e7171.png'
 runs:
   using: 'node16'
   main: 'index.js'

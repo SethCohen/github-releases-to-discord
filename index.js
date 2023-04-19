@@ -68,8 +68,8 @@ async function run () {
         embeds: [embedMsg]
     }
 
-    if (username) requestBody.username = username;
-    if (avatarUrl) requestBody.avatar_url = avatarUrl;
+    if (username != '') requestBody.username = username;
+    if (avatarUrl != '') requestBody.avatar_url = avatarUrl;
 
     const url = `${webhookUrl}?wait=true`;
     fetch(url, {
