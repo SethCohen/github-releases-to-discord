@@ -1,5 +1,17 @@
 # Changelog
 
+## [1.13.1](https://github.com/SethCohen/github-releases-to-discord/compare/v1.13.0...v1.13.1) (2023-09-23)
+
+
+### Miscellaneous
+
+* updated action info ([c240910](https://github.com/SethCohen/github-releases-to-discord/commit/c240910f8922fb8492346613f67a84811a0fdbac))
+* updated action info ([c888953](https://github.com/SethCohen/github-releases-to-discord/commit/c8889535c4a02efec3e8a6b26e1ee17fcd36ac7b))
+* updated dependencies ([24b80ab](https://github.com/SethCohen/github-releases-to-discord/commit/24b80abb6f9c71123456a908af5d3b92ccc755af))
+* updated README.md ([ba06d83](https://github.com/SethCohen/github-releases-to-discord/commit/ba06d833522e55d3453ee27bea9a7f3655378359))
+* updated README.md ([ce7fc4a](https://github.com/SethCohen/github-releases-to-discord/commit/ce7fc4a3be811af077c4f43dd005851d65204fb1))
+* updated release-please action ([933f3cf](https://github.com/SethCohen/github-releases-to-discord/commit/933f3cffcf2139fcd71dddbb8bc76bc7cfa09170))
+
 ## [1.13.0](https://github.com/SethCohen/github-release-to-discord/compare/v1.12.1...v1.13.0) (2022-08-25)
 
 
