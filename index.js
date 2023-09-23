@@ -25,16 +25,16 @@ const formatDescription = (description) => {
 
 /**
  * Get the context of the action, returns a GitHub Release payload.
- * @returns {Promise<{html_url, body: (*|string), version: string}>}
+ * @returns {Promise<{html_url, body: (*|string), name: string}>}
  */
 async function getContext () {
-    const payload = github.context.payload
+    const payload = github.context.payload;
 
     return {
         body: payload.release.body.length < 1500
             ? payload.release.body
             : payload.release.body.substring(0, 1500) + ` ([...](${payload.release.html_url}))`,
-        version: payload.release.tag_name,
+            name: payload.release.name,
         html_url: payload.release.html_url
     }
 }
@@ -45,31 +45,42 @@ async function getContext () {
  * @returns {Promise<void>}
  */
 async function run () {
-    const webhookUrl = core.getInput('webhook_url')
-    const color = core.getInput('color')
-    const username = core.getInput('username')
-    const avatarUrl = core.getInput('avatar_url')
+    const webhookUrl = core.getInput('webhook_url');
+    const color = core.getInput('color');
+    const username = core.getInput('username');
+    const avatarUrl = core.getInput('avatar_url');
+    const content = core.getInput('content');
+    const footerTitle = core.getInput('footer_title');
+    const footerIconUrl = core.getInput('footer_icon_url');
+    const footerTimestamp = core.getInput('footer_timestamp');
 
-    if (!webhookUrl) return core.setFailed('webhook_url not set. Please set it.')
+    if (!webhookUrl) return core.setFailed('webhook_url not set. Please set it.');
 
-    const {body, html_url, version} = await getContext()
+    const {body, html_url, name} = await getContext();
 
-    const description = formatDescription(body)
+    const description = formatDescription(body);
 
-    const embedMsg = {
-        title: `Release ${version}`,
+    let embedMsg = {
+        title: name,
         url: html_url,
         color: color,
-        description: description
+        description: description,
+        footer: {}
     }
 
-    const requestBody = {
-        username: username,
-        avatar_url: avatarUrl,
+    if (footerTitle != '') embedMsg.footer.text = footerTitle;
+    if (footerIconUrl != '') embedMsg.footer.icon_url = footerIconUrl;
+    if (footerTimestamp == 'true') embedMsg.timestamp = new Date().toISOString();
+
+    let requestBody = {
         embeds: [embedMsg]
     }
 
-    const url = `${webhookUrl}?wait=true`
+    if (username != '') requestBody.username = username;
+    if (avatarUrl != '') requestBody.avatar_url = avatarUrl;
+    if (content != '') requestBody.content = content;
+
+    const url = `${webhookUrl}?wait=true`;
     fetch(url, {
         method: 'post',
         body: JSON.stringify(requestBody),
