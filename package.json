@@ -4,9 +4,6 @@
   "description": "A GitHub Action that automatically sends a stylized Discord webhook of a GitHub Release description to a specified Discord channel.",
   "type": "module",
   "main": "index.js",
-  "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
-  },
   "keywords": [
     "discord",
     "github",
@@ -25,8 +22,8 @@
   "homepage": "https://github.com/SethCohen/github-releases-to-discord#readme",
   "license": "MIT",
   "dependencies": {
-    "@actions/core": "^1.9.1",
-    "@actions/github": "^5.0.3",
-    "node-fetch": "^3.2.10"
+    "@actions/core": "^1.10.1",
+    "@actions/github": "^5.1.1",
+    "node-fetch": "^3.3.2"
   }
 }
