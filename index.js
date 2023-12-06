@@ -5,10 +5,11 @@ import fetch from 'node-fetch';
 /**
  * Stylizes a markdown body into an appropriate embed message style.
  *  Remove HTML comments (commonly added by 'Generate release notes' button)
- *  H3s converted to bold and underlined.
- *  H2s converted to bold.
  *  Redundant whitespace and newlines removed, keeping at max 2 to provide space between paragraphs.
  *  Trim leading/trailing whitespace
+ *  If reduce_headings:
+ *   H3s converted to bold and underlined.
+ *   H2s converted to bold.
  * @param description
  * @returns {*}
  */
@@ -19,18 +20,6 @@ const formatDescription = (description) => {
 
     const edit = description
         .replace(/<!--.*?-->/g, '')
-        // .replace(/^### (.*?)$/gm, '**__$1__**')
-        // .replace(/^## (.*?)$/gm, '**$1**')
-        .replace(/### (.*?)\n/g, function (substring) {
-            core.info('H3', substring)
-            const newString = substring.slice(4).replace(/(\r\n|\n|\r)/gm, "")
-            return `**__${newString}__**`
-        })
-        .replace(/## (.*?)\n/g, function (substring) {
-            core.info('H2', substring)
-            const newString = substring.slice(3).replace(/(\r\n|\n|\r)/gm, "")
-            return `**${newString}**`
-        })
         .replace(
             new RegExp(
                 "https://github.com/(.+)/(.+)/(issues|pull|compare)/(\\S+)",
@@ -45,6 +34,12 @@ const formatDescription = (description) => {
             return nlCount >= 2 ? '\n\n' : '\n'
         })
         .trim()
+
+    if (core.getBooleanInput('reduce_headings')) {
+        edit = edit
+            .replace(/^### (.*?)$/gm, '**__$1__**')
+            .replace(/^## (.*?)$/gm, '**$1**')
+    }
 
     core.startGroup('Updated Description')
     core.info(edit)

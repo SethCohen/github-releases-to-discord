@@ -7,17 +7,18 @@ A GitHub action that parses a GitHub release and posts it to a Discord channel a
 
 ## Configuration
 
-| Variable        | Required | Default                                                                                                        | Description                                |
-|-----------------|----------|----------------------------------------------------------------------------------------------------------------|--------------------------------------------|
-| webhook_url     | ✔        |                                                                                                                | Discord's webhook url. Use GH repo secrets.|
-| color           | ❌       | "2105893"                                                                                                      | Decimal color value for embed.             |
-| username        | ❌       |                                                                                                                | String username for webhook.               |
-| avatar_url      | ❌       |                                                                                                                | String url to webhook avatar picture.      |
-| content         | ❌       |                                                                                                                | String content for webhook.                |
-| footer_title    | ❌       |                                                                                                                | String title for the webhook footer.       |
-| footer_icon_url | ❌       |                                                                                                                | String url for the webhook footer picture. |
-| footer_timestamp| ❌       |                                                                                                                | Boolean to enable footer timestamp.        |
-| max_description | ❌       | "1500"                                                                                                         | Max length for the description.            |
+| Variable        | Required | Default                                                                                               | Description                                     |
+|-----------------|----------|-------------------------------------------------------------------------------------------------------|-------------------------------------------------|
+| webhook_url     | ✔        |                                                                                                       | Discord's webhook url. Use GH repo secrets.     |
+| color           | ❌       | "2105893"                                                                                             | Decimal color value for embed.                  |
+| username        | ❌       |                                                                                                       | String username for webhook.                    |
+| avatar_url      | ❌       |                                                                                                       | String url to webhook avatar picture.           |
+| content         | ❌       |                                                                                                       | String content for webhook.                     |
+| footer_title    | ❌       |                                                                                                       | String title for the webhook footer.            |
+| footer_icon_url | ❌       |                                                                                                       | String url for the webhook footer picture.      |
+| footer_timestamp| ❌       |                                                                                                       | Boolean to enable footer timestamp.             |
+| max_description | ❌       | "1500"                                                                                                | Max length for the description.                 |
+| reduce_headings | ❌       | false                                                                                                 | Converts H3 to bold, h2 to bold & underline     |
 
 ## Example Usage
 
