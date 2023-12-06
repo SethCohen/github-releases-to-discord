@@ -19,8 +19,16 @@ const formatDescription = (description) => {
 
     const edit = description
         .replace(/<!--.*?-->/g, '')
-        .replace(/^### (.*?)$/gm, '**__$1__**')
-        .replace(/^## (.*?)$/gm, '**$1**')
+        // .replace(/^### (.*?)$/gm, '**__$1__**')
+        // .replace(/^## (.*?)$/gm, '**$1**')
+        .replace(/### (.*?)\n/g,function (substring) {
+            const newString = substring.slice(4).replace(/(\r\n|\n|\r)/gm, "")
+            return `**__${newString}__**`
+        })
+        .replace(/## (.*?)\n/g,function (substring) {
+            const newString = substring.slice(3).replace(/(\r\n|\n|\r)/gm, "")
+            return `**${newString}**`
+        })
         .replace(
             new RegExp(
                 "https://github.com/(.+)/(.+)/(issues|pull|compare)/(\\S+)",
