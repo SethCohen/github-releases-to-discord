@@ -21,11 +21,13 @@ const formatDescription = (description) => {
         .replace(/<!--.*?-->/g, '')
         // .replace(/^### (.*?)$/gm, '**__$1__**')
         // .replace(/^## (.*?)$/gm, '**$1**')
-        .replace(/### (.*?)\n/g,function (substring) {
+        .replace(/### (.*?)\n/g, function (substring) {
+            core.info('H3', substring)
             const newString = substring.slice(4).replace(/(\r\n|\n|\r)/gm, "")
             return `**__${newString}__**`
         })
-        .replace(/## (.*?)\n/g,function (substring) {
+        .replace(/## (.*?)\n/g, function (substring) {
+            core.info('H2', substring)
             const newString = substring.slice(3).replace(/(\r\n|\n|\r)/gm, "")
             return `**${newString}**`
         })
