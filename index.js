@@ -13,7 +13,11 @@ import fetch from 'node-fetch';
  * @returns {*}
  */
 const formatDescription = (description) => {
-    return description
+    core.startGroup('Original Description')
+    core.info(description)
+    core.endGroup()
+
+    const edit = description
         .replace(/<!--.*?-->/g, '')
         .replace(/^### (.*?)$/gm, '**__$1__**')
         .replace(/^## (.*?)$/gm, '**$1**')
@@ -31,6 +35,12 @@ const formatDescription = (description) => {
             return nlCount >= 2 ? '\n\n' : '\n'
         })
         .trim()
+
+    core.startGroup('Updated Description')
+    core.info(edit)
+    core.endGroup()
+
+    return edit
 }
 
 /**
