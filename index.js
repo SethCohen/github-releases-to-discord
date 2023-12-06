@@ -4,23 +4,69 @@ import fetch from 'node-fetch';
 
 /**
  * Stylizes a markdown body into an appropriate embed message style.
+ *  Remove HTML comments (commonly added by 'Generate release notes' button)
  *  H3s converted to bold and underlined.
  *  H2s converted to bold.
- *  Redundant whitespace and newlines removed.
+ *  Redundant whitespace and newlines removed, keeping at max 2 to provide space between paragraphs.
+ *  Trim leading/trailing whitespace
  * @param description
  * @returns {*}
  */
 const formatDescription = (description) => {
     return description
-        .replace(/### (.*?)\n/g,function (substring) {
-            const newString = substring.slice(4).replace(/(\r\n|\n|\r)/gm, "")
-            return `**__${newString}__**`
+        .replace(/<!--.*?-->/g, '')
+        .replace(/^### (.*?)$/gm, '**__$1__**')
+        .replace(/^## (.*?)$/gm, '**$1**')
+        .replace(
+            new RegExp(
+                "https://github.com/(.+)/(.+)/(issues|pull|compare)/(\\S+)",
+                "g"
+            ),
+            (match, user, repo, type, id) => {
+                return `[${getUrlPrefix(type) + id}](${match})`;
+            }
+        )
+        .replace(/\n\s*\n/g, (ws) => {
+            const nlCount = (ws.match(/\n/g) || []).length
+            return nlCount >= 2 ? '\n\n' : '\n'
         })
-        .replace(/## (.*?)\n/g,function (substring) {
-            const newString = substring.slice(3).replace(/(\r\n|\n|\r)/gm, "")
-            return `**${newString}**`
-        })
-        .replace(/\n\s*\n/g, '\n')
+        .trim()
+}
+
+/**
+ * Get a prefix to use for Github link display
+ * @param {'issues' | 'pull' | 'compare'} type 
+ */
+function getUrlPrefix (type) {
+    switch (type) {
+        case 'issues':
+            return 'Issue #'
+        case 'pull':
+            return 'PR #'
+        case 'compare':
+            return ''
+        default:
+            return '#'
+    }
+}
+
+/**
+ * Gets the max description length if set to a valid number,
+ * otherwise the default of 1500
+ * @returns {number}
+ */
+function getMaxDescription () {
+    try {
+        const max = core.getInput('max_description')
+        if (typeof max === 'string' && max.length) {
+            // https://discord.com/developers/docs/resources/channel#embed-object-embed-limits
+            // 4096 is max for Embed Description, minus 500 to allow for elipsis and link
+            return Math.min(parseInt(max, 10), 4096 - 500)
+        }
+    } catch (err) {
+        core.warning(`max_description not a valid number: ${err}`)
+    }
+    return 1500
 }
 
 /**
@@ -29,12 +75,13 @@ const formatDescription = (description) => {
  */
 async function getContext () {
     const payload = github.context.payload;
+    const maxDesc = getMaxDescription()
 
     return {
-        body: payload.release.body.length < 1500
+        body: payload.release.body.length < maxDesc
             ? payload.release.body
-            : payload.release.body.substring(0, 1500) + ` ([...](${payload.release.html_url}))`,
-            name: payload.release.name,
+            : payload.release.body.substring(0, maxDesc) + ` ([...](${payload.release.html_url}))`,
+        name: payload.release.name,
         html_url: payload.release.html_url
     }
 }

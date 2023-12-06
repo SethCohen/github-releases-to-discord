@@ -17,6 +17,7 @@ A GitHub action that parses a GitHub release and posts it to a Discord channel a
 | footer_title    | ❌       |                                                                                                                | String title for the webhook footer.       |
 | footer_icon_url | ❌       |                                                                                                                | String url for the webhook footer picture. |
 | footer_timestamp| ❌       |                                                                                                                | Boolean to enable footer timestamp.        |
+| max_description | ❌       | "1500"                                                                                                         | Max length for the description.            |
 
 ## Example Usage
 
