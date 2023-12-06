@@ -18,7 +18,7 @@ const formatDescription = (description) => {
     core.info(description)
     core.endGroup()
 
-    const edit = description
+    let edit = description
         .replace(/<!--.*?-->/g, '')
         .replace(
             new RegExp(
