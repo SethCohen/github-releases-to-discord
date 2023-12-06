@@ -5,11 +5,12 @@ import fetch from 'node-fetch';
 /**
  * Stylizes a markdown body into an appropriate embed message style.
  *  Remove HTML comments (commonly added by 'Generate release notes' button)
- *  Redundant whitespace and newlines removed, keeping at max 2 to provide space between paragraphs.
+ *  Better URL linking for commong Github links: PRs, Issues, Compare
+ *  Redundant whitespace and newlines removed, keeping at max 2 to provide space between paragraphs
  *  Trim leading/trailing whitespace
  *  If reduce_headings:
- *   H3s converted to bold and underlined.
- *   H2s converted to bold.
+ *   H3s converted to bold and underlined
+ *   H2s converted to bold
  * @param description
  * @returns {*}
  */
