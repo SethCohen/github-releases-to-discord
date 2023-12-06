@@ -14,10 +14,6 @@ import fetch from 'node-fetch';
  * @returns {*}
  */
 const formatDescription = (description) => {
-    core.startGroup('Original Description')
-    core.info(description)
-    core.endGroup()
-
     let edit = description
         .replace(/<!--.*?-->/g, '')
         .replace(
@@ -40,10 +36,6 @@ const formatDescription = (description) => {
             .replace(/^### (.*?)$/gm, '**__$1__**')
             .replace(/^## (.*?)$/gm, '**$1**')
     }
-
-    core.startGroup('Updated Description')
-    core.info(edit)
-    core.endGroup()
 
     return edit
 }
