@@ -1,5 +1,26 @@
 # Changelog
 
+## [1.14.0](https://github.com/SethCohen/github-releases-to-discord/compare/v1.13.1...v1.14.0) (2023-12-11)
+
+
+### Features
+
+* added additional description formatting ([#23](https://github.com/SethCohen/github-releases-to-discord/issues/23)) ([8ca9da2](https://github.com/SethCohen/github-releases-to-discord/commit/8ca9da2ca8e3435ee9b0d387355c0fae255c16b0))
+* added max_description option ([8ca9da2](https://github.com/SethCohen/github-releases-to-discord/commit/8ca9da2ca8e3435ee9b0d387355c0fae255c16b0))
+* added reduce_headings option ([8ca9da2](https://github.com/SethCohen/github-releases-to-discord/commit/8ca9da2ca8e3435ee9b0d387355c0fae255c16b0))
+* description trimming ([8ca9da2](https://github.com/SethCohen/github-releases-to-discord/commit/8ca9da2ca8e3435ee9b0d387355c0fae255c16b0))
+
+
+### Styles
+
+* parse common Github URLs to more appropriate display ([8ca9da2](https://github.com/SethCohen/github-releases-to-discord/commit/8ca9da2ca8e3435ee9b0d387355c0fae255c16b0))
+* reduce consecutive whitespace/newlines into a minimum of 2 to allow separation in paragraphs ([8ca9da2](https://github.com/SethCohen/github-releases-to-discord/commit/8ca9da2ca8e3435ee9b0d387355c0fae255c16b0))
+
+
+### Miscellaneous
+
+* update README.md ([254bf79](https://github.com/SethCohen/github-releases-to-discord/commit/254bf7919618aea9ce0a3db67901010a20426def))
+
 ## [1.13.1](https://github.com/SethCohen/github-releases-to-discord/compare/v1.13.0...v1.13.1) (2023-09-23)
 
 
