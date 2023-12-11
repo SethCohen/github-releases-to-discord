@@ -4,6 +4,7 @@ import fetch from 'node-fetch';
 
 /**
  * Stylizes a markdown body into an appropriate embed message style.
+ *  Remove Carriage Return character to reduce size
  *  Remove HTML comments (commonly added by 'Generate release notes' button)
  *  Better URL linking for common Github links: PRs, Issues, Compare
  *  Redundant whitespace and newlines removed, keeping at max 2 to provide space between paragraphs
@@ -15,6 +16,7 @@ import fetch from 'node-fetch';
  */
 const formatDescription = (description) => {
     let edit = description
+        .replace(/\r/g, '')
         .replace(/<!--.*?-->/gs, '')
         .replace(
             new RegExp(
@@ -94,21 +96,23 @@ function getContext () {
  * 
  * @param {string} str
  * @param {number} maxLength
- * @param {string=} url
+ * @param {string} [url]
+ * @param {boolean} [clipAtLine=false] 
  */
-function limit(str, maxLength, url) {
+function limit(str, maxLength, url, clipAtLine) {
+    clipAtLine ??= false
     if (str.length <= maxLength)
         return str
-    let replacement = '…'
+    let replacement = clipAtLine ? '\n…' : '…'
     if (url) {
-        replacement = `([${replacement}](${url}))`
+        replacement = `${clipAtLine ? '\n' : ''}([…](${url}))`
     }
     maxLength = maxLength - replacement.length
     str = str.substring(0, maxLength)
 
-    const lastWhitespace = str.search(/[^\s]*$/)
-    if (lastWhitespace > -1) {
-        str = str.substring(0, lastWhitespace)
+    const lastNewline = str.search(new RegExp(`[^${clipAtLine ? '\n' : '\s'}]*$`))
+    if (lastNewline > -1) {
+        str = str.substring(0, lastNewline)
     }
 
     return str + replacement
@@ -147,7 +151,7 @@ async function run () {
     if (footerTimestamp == 'true') embedMsg.timestamp = new Date().toISOString();
 
     let embedSize = embedMsg.title.length + (embedMsg.footer?.text?.length ?? 0)
-    embedMsg.description = limit(embedMsg.description, Math.min(getMaxDescription(), 6000 - embedSize), embedMsg.url)
+    embedMsg.description = limit(embedMsg.description, Math.min(getMaxDescription(), 6000 - embedSize), embedMsg.url, true)
 
     let requestBody = {
         embeds: [embedMsg]
