@@ -1,5 +1,12 @@
 # Changelog
 
+## [1.15.0](https://github.com/SethCohen/github-releases-to-discord/compare/v1.14.0...v1.15.0) (2023-12-14)
+
+
+### Features
+
+* added clip description at last newline ([#25](https://github.com/SethCohen/github-releases-to-discord/issues/25)) ([97a4813](https://github.com/SethCohen/github-releases-to-discord/commit/97a481333d0b902f599b12f03b47c4a6cbfa5e52))
+
 ## [1.14.0](https://github.com/SethCohen/github-releases-to-discord/compare/v1.13.1...v1.14.0) (2023-12-11)
 
 
