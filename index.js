@@ -31,7 +31,7 @@ const formatDescription = (description) => {
             const nlCount = (ws.match(/\n/g) || []).length
             return nlCount >= 2 ? '\n\n' : '\n'
         })
-        .replace(/@(\S+)/g, (match, name) => { return `[@${name}](https://github.com/${name})`; })
+        .replace(/@(\S+)/g, (match, name) => { return `[@${name}](https://github.com/${name})` })
         .trim()
 
     if (core.getBooleanInput('reduce_headings')) {
