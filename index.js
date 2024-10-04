@@ -3,176 +3,201 @@ import github from '@actions/github';
 import fetch from 'node-fetch';
 
 /**
+ * Removes carriage return characters.
+ * @param {string} text The input text.
+ * @returns {string} The text without carriage return characters.
+ */
+const removeCarriageReturn = (text) => text.replace(/\r/g, '');
+
+/**
+ * Removes HTML comments.
+ * @param {string} text The input text.
+ * @returns {string} The text without HTML comments.
+ */
+const removeHTMLComments = (text) => text.replace(/<!--.*?-->/gs, '');
+
+/**
+ * Reduces redundant newlines and spaces.
+ * Keeps a maximum of 2 newlines to provide spacing between paragraphs.
+ * @param {string} text The input text.
+ * @returns {string} The text with reduced newlines.
+ */
+const reduceNewlines = (text) => text.replace(/\n\s*\n/g, (ws) => {
+    const nlCount = (ws.match(/\n/g) || []).length;
+    return nlCount >= 2 ? '\n\n' : '\n';
+});
+
+/**
+ * Converts @mentions to GitHub profile links.
+ * @param {string} text The input text.
+ * @returns {string} The text with @mentions converted to links.
+ */
+const convertMentionsToLinks = (text) => text.replace(/@(\S+)/g, (match, name) => `[@${name}](https://github.com/${name})`);
+
+/**
+ * Reduces headings to a smaller format if 'reduce_headings' is enabled.
+ * Converts H3 to bold+underline, H2 to bold.
+ * @param {string} text The input text.
+ * @returns {string} The text with reduced heading sizes.
+ */
+const reduceHeadings = (text) => text
+    .replace(/^###\s+(.+)$/gm, '**__$1__**') // Convert H3 to bold + underline
+    .replace(/^##\s+(.+)$/gm, '**$1**');     // Convert H2 to bold
+
+/**
  * Stylizes a markdown body into an appropriate embed message style.
- *  Remove Carriage Return character to reduce size
- *  Remove HTML comments (commonly added by 'Generate release notes' button)
- *  Better URL linking for common Github links: PRs, Issues, Compare
- *  Redundant whitespace and newlines removed, keeping at max 2 to provide space between paragraphs
- *  Trim leading/trailing whitespace
- *  If reduce_headings:
- *   H3s converted to bold and underlined
- *   H2s converted to bold
- * @param {string} description
+ * @param {string} description The description to format.
+ * @returns {string} The formatted description.
  */
 const formatDescription = (description) => {
-    let edit = description
-        .replace(/\r/g, '')
-        .replace(/<!--.*?-->/gs, '')
-        .replace(
-            new RegExp(
-                "https://github.com/(.+)/(.+)/(issues|pull|commit|compare)/(\\S+)",
-                "g"
-            ),
-            (match, user, repo, type, id) => {
-                return `[${getTypePrefix(type) + id}](${match})`
-            }
-        )
-        .replace(/\n\s*\n/g, (ws) => {
-            const nlCount = (ws.match(/\n/g) || []).length
-            return nlCount >= 2 ? '\n\n' : '\n'
-        })
-        .replace(/@(\S+)/g, (match, name) => { return `[@${name}](https://github.com/${name})` })
-        .trim()
+    let edit = removeCarriageReturn(description);
+    edit = removeHTMLComments(edit);
+    edit = reduceNewlines(edit);
+    edit = convertMentionsToLinks(edit);
+    edit = edit.trim();
 
     if (core.getBooleanInput('reduce_headings')) {
-        edit = edit
-            .replace(/^###\s+(.+)$/gm, '**__$1__**')
-            .replace(/^##\s+(.+)$/gm, '**$1**')
+        edit = reduceHeadings(edit);
     }
 
-    return edit
-}
+    return edit;
+};
 
 /**
- * Get a prefix to use for Github link display
- * @param {'issues' | 'pull' | 'commit' | 'compare'} type 
+ * Gets the max description length, defaulting to 4096 if not set or invalid.
+ * @returns {number} The max description length.
  */
-function getTypePrefix (type) {
-    switch (type) {
-        case 'issues':
-            return 'Issue #'
-        case 'pull':
-            return 'PR #'
-        case 'commit':
-            return 'Commit #'
-        case 'compare':
-            return ''
-        default:
-            return '#'
-    }
-}
-
-/**
- * Gets the max description length if set to a valid number,
- * otherwise the default of 4096
- */
-function getMaxDescription () {
+const getMaxDescription = () => {
     try {
-        const max = core.getInput('max_description')
-        if (typeof max === 'string' && max.length) {
-            // 4096 is max for Embed Description
-            // https://discord.com/developers/docs/resources/channel#embed-object-embed-limits
-            return Math.min(parseInt(max, 10), 4096)
+        const max = core.getInput('max_description');
+        if (max && !isNaN(max)) {
+            return Math.min(parseInt(max, 10), 4096);
         }
     } catch (err) {
-        core.warning(`max_description not a valid number: ${err}`)
+        core.warning(`Invalid max_description: ${err}`);
     }
-    return 4096
-}
+    return 4096;
+};
 
 /**
- * Get the context of the action, returns a GitHub Release payload.
+ * Get the context of the action, returning a GitHub Release payload.
+ * @returns {object} The context with release details.
  */
-function getContext () {
-    const payload = github.context.payload;
-
+const getContext = () => {
+    const { release } = github.context.payload;
     return {
-        body: payload.release.body,
-        name: payload.release.name,
-        html_url: payload.release.html_url
-    }
-}
+        body: release.body,
+        name: release.name,
+        html_url: release.html_url
+    };
+};
 
 /**
- * 
- * @param {string} str
- * @param {number} maxLength
- * @param {string} [url]
- * @param {boolean} [clipAtLine=false] 
+ * Limits the string to a maximum length, optionally adding a URL or clipping at a newline.
+ * @param {string} str The string to limit.
+ * @param {number} maxLength The maximum allowed length.
+ * @param {string} [url] Optional URL for linking the truncated text.
+ * @param {boolean} [clipAtLine=false] Whether to clip at the nearest newline.
+ * @returns {string} The limited string.
  */
-function limit(str, maxLength, url, clipAtLine) {
-    clipAtLine ??= false
-    if (str.length <= maxLength)
-        return str
-    let replacement = clipAtLine ? '\n…' : '…'
-    if (url) {
-        replacement = `${clipAtLine ? '\n' : ''}([…](${url}))`
-    }
-    maxLength = maxLength - replacement.length
-    str = str.substring(0, maxLength)
+const limitString = (str, maxLength, url, clipAtLine = false) => {
+    if (str.length <= maxLength) return str;
 
-    const lastNewline = str.search(new RegExp(`[^${clipAtLine ? '\n' : '\s'}]*$`))
+    const replacement = url
+        ? `${clipAtLine ? '\n' : ''}([…](${url}))`
+        : (clipAtLine ? '\n…' : '…');
+
+    maxLength -= replacement.length;
+    str = str.substring(0, maxLength);
+
+    const lastNewline = str.search(new RegExp(`[^${clipAtLine ? '\n' : '\s'}]*$`));
     if (lastNewline > -1) {
-        str = str.substring(0, lastNewline)
+        str = str.substring(0, lastNewline);
     }
 
-    return str + replacement
-}
+    return str + replacement;
+};
 
 /**
- * Handles the action.
- * Get inputs, creates a stylized response webhook, and sends it to the channel.
+ * Builds the embed message for the Discord webhook.
+ * @param {string} name The title or name of the release.
+ * @param {string} html_url The URL of the release.
+ * @param {string} description The formatted description of the release.
+ * @returns {object} The embed message to send in the webhook.
  */
-async function run () {
+const buildEmbedMessage = (name, html_url, description) => {
+    const embedMsg = {
+        title: limitString(name, 256),
+        url: html_url,
+        color: core.getInput('color'),
+        description: limitString(description, Math.min(getMaxDescription(), 6000 - name.length)),
+        footer: {}
+    };
+
+    if (core.getInput('footer_title')) {
+        embedMsg.footer.text = limitString(core.getInput('footer_title'), 2048);
+    }
+    if (core.getInput('footer_icon_url')) {
+        embedMsg.footer.icon_url = core.getInput('footer_icon_url');
+    }
+    if (core.getInput('footer_timestamp') === 'true') {
+        embedMsg.timestamp = new Date().toISOString();
+    }
+
+    return embedMsg;
+};
+
+/**
+ * Sends the webhook request to Discord.
+ * @param {string} webhookUrl The URL of the Discord webhook.
+ * @param {object} requestBody The payload to send in the webhook.
+ */
+const sendWebhook = async (webhookUrl, requestBody) => {
+    try {
+        const response = await fetch(`${webhookUrl}?wait=true`, {
+            method: 'POST',
+            body: JSON.stringify(requestBody),
+            headers: { 'Content-Type': 'application/json' }
+        });
+        const data = await response.json();
+        core.info(JSON.stringify(data));
+    } catch (err) {
+        core.setFailed(err.message);
+    }
+};
+
+/**
+ * Builds the request body for the Discord webhook.
+ * @param {object} embedMsg The embed message to include in the request body.
+ * @returns {object} The request body for the webhook.
+ */
+const buildRequestBody = (embedMsg) => {
+    return {
+        embeds: [embedMsg],
+        ...(core.getInput('username') && { username: core.getInput('username') }),
+        ...(core.getInput('avatar_url') && { avatar_url: core.getInput('avatar_url') }),
+        ...(core.getInput('content') && { content: core.getInput('content') })
+    };
+};
+
+
+/**
+ * Main function to handle the action: get inputs, format the message, and send the webhook.
+ */
+const run = async () => {
     const webhookUrl = core.getInput('webhook_url');
-    const color = core.getInput('color');
-    const username = core.getInput('username');
-    const avatarUrl = core.getInput('avatar_url');
-    const content = core.getInput('content');
-    const footerTitle = core.getInput('footer_title');
-    const footerIconUrl = core.getInput('footer_icon_url');
-    const footerTimestamp = core.getInput('footer_timestamp');
+    if (!webhookUrl) return core.setFailed('webhook_url not set.');
 
-    if (!webhookUrl) return core.setFailed('webhook_url not set. Please set it.');
-
-    const {body, html_url, name} = getContext();
-
+    const { body, html_url, name } = getContext();
     const description = formatDescription(body);
 
-    let embedMsg = {
-        title: limit(name, 256),
-        url: html_url,
-        color: color,
-        description: description,
-        footer: {}
-    }
+    const embedMsg = buildEmbedMessage(name, html_url, description);
 
-    if (footerTitle != '') embedMsg.footer.text = limit(footerTitle, 2048);
-    if (footerIconUrl != '') embedMsg.footer.icon_url = footerIconUrl;
-    if (footerTimestamp == 'true') embedMsg.timestamp = new Date().toISOString();
+    const requestBody = buildRequestBody(embedMsg);
 
-    let embedSize = embedMsg.title.length + (embedMsg.footer?.text?.length ?? 0)
-    embedMsg.description = limit(embedMsg.description, Math.min(getMaxDescription(), 6000 - embedSize), embedMsg.url, true)
-
-    let requestBody = {
-        embeds: [embedMsg]
-    }
-
-    if (username != '') requestBody.username = username;
-    if (avatarUrl != '') requestBody.avatar_url = avatarUrl;
-    if (content != '') requestBody.content = content;
-
-    const url = `${webhookUrl}?wait=true`;
-    fetch(url, {
-        method: 'post',
-        body: JSON.stringify(requestBody),
-        headers: { 'Content-Type': 'application/json' }
-    })
-        .then(res => res.json())
-        .then(data => core.info(JSON.stringify(data)))
-        .catch(err => core.info(err))
-}
+    await sendWebhook(webhookUrl, requestBody);
+};
 
 run()
-    .then(() => {core.info('Action completed successfully')})
-    .catch(err => {core.setFailed(err.message)})
+    .then(() => core.info('Action completed successfully'))
+    .catch(err => core.setFailed(err.message));
