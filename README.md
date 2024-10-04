@@ -1,5 +1,19 @@
 # GitHub Releases To Discord Action
-A GitHub action that parses a GitHub release and posts it to a Discord channel as a stylized Discord webhook.
+
+A GitHub Action that sends a stylized Discord webhook containing the description of a GitHub Release to a specified Discord channel. It formats the description to improve readability and includes various configuration options to customize the message.
+
+## Features
+
+- Formats release descriptions by:
+  - Removing carriage returns and HTML comments.
+  - Styling headers for better readability in Discord (optional).
+  - Cleaning up redundant whitespace and newlines.
+  - Converting common GitHub links (e.g., PRs, Issues) into clickable URLs.
+- Limits description length to avoid exceeding Discord's character limits.
+- Provides customization for the Discord message, including:
+  - Webhook URL, message color, footer text/icon, and timestamp.
+  - Username and avatar for the webhook.
+  - Optional message content outside the embed.
 
 ---
 ## Output
@@ -35,7 +49,7 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v3
       - name: Github Releases To Discord
-        uses: SethCohen/github-releases-to-discord@v1.13.1
+        uses: SethCohen/github-releases-to-discord@v1.15.1
         with:
           webhook_url: ${{ secrets.WEBHOOK_URL }}
           color: "2105893"
@@ -45,6 +59,8 @@ jobs:
           footer_title: "Changelog"
           footer_icon_url: "https://cdn.discordapp.com/avatars/487431320314576937/bd64361e4ba6313d561d54e78c9e7171.png"
           footer_timestamp: true
+          max_description: '4096'
+          reduce_headings: true
 ```
 
 ## Setup Instructions
