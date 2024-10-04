@@ -1,5 +1,23 @@
 # Changelog
 
+## [1.15.1](https://github.com/SethCohen/github-releases-to-discord/compare/v1.15.0...v1.15.1) (2024-10-04)
+
+
+### Documentation
+
+* updated README.md ([613ba26](https://github.com/SethCohen/github-releases-to-discord/commit/613ba269d7fe40e97040da19de58b0ae00b47aaf))
+
+
+### Miscellaneous
+
+* added test envs to .gitignore ([735cca9](https://github.com/SethCohen/github-releases-to-discord/commit/735cca9de37b345e69b0c74ff761610eab6f1fd1))
+* updated test action ([305fe92](https://github.com/SethCohen/github-releases-to-discord/commit/305fe9299dddb3a514f2b1692773570862c34d46))
+
+
+### Code Refactoring
+
+* code cleanup ([5ca1453](https://github.com/SethCohen/github-releases-to-discord/commit/5ca1453a69f962930450a9f77d4e20cc37e4110f))
+
 ## [1.15.0](https://github.com/SethCohen/github-releases-to-discord/compare/v1.14.0...v1.15.0) (2023-12-14)
 
 
