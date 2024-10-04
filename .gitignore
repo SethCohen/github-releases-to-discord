@@ -2,3 +2,5 @@
 *.iml
 out
 gen
+.env
+tests/sample-test-release.json
