@@ -11,4 +11,14 @@ jobs:
       - name: Github Releases To Discord
         uses: ./ # Uses an action in the root directory
         with:
-          webhook_url: ${{ secrets.WEBHOOK_URL }}
+          webhook_url: ${{ inputs.WEBHOOK_URL }}
+          color: ${{ inputs.COLOR }}
+          username: ${{ inputs.USERNAME }}
+          avatar_url: ${{ inputs.AVATAR_URL }}
+          content: ${{ inputs.CONTENT }}
+          footer_title: ${{ inputs.FOOTER_TITLE }}
+          footer_icon_url: ${{ inputs.FOOTER_ICON_URL }}
+          footer_timestamp: ${{ inputs.FOOTER_TIMESTAMP }}
+          max_description: ${{ inputs.MAX_DESCRIPTION }}
+          reduce_headings: ${{ inputs.REDUCE_HEADINGS }}
+          
