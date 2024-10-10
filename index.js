@@ -28,11 +28,14 @@ const reduceNewlines = (text) => text.replace(/\n\s*\n/g, (ws) => {
 });
 
 /**
- * Converts @mentions to GitHub profile links.
+ * Converts @mentions to GitHub profile links for valid GitHub usernames.
  * @param {string} text The input text.
- * @returns {string} The text with @mentions converted to links.
+ * @returns {string} The text with valid @mentions converted to links.
  */
-const convertMentionsToLinks = (text) => text.replace(/@(\S+)/g, (match, name) => `[@${name}](https://github.com/${name})`);
+const convertMentionsToLinks = (text) => text.replace(
+    /(?<![/@\w])@((?!-)(?!.*?--)[a-zA-Z0-9](?:-?[a-zA-Z0-9]){0,37})(?![.\w/-])(?!.*\])/g,
+    (match, name) => `[@${name}](https://github.com/${name})`
+);
 
 /**
  * Reduces headings to a smaller format if 'reduce_headings' is enabled.
