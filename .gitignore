@@ -4,3 +4,7 @@ out
 gen
 .env
 tests/sample-test-release.json
+release.json
+repository.json
+user.json
+tests/sample-test-release-v2.json
