@@ -27,7 +27,7 @@ A GitHub Action that sends a stylized Discord webhook containing the description
 
 ## Output
 
-![output](https://i.imgur.com/Zf3TXtb.png)
+![output](https://i.imgur.com/ovr0gTL.png)
 
 ## Configuration
 
