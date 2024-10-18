@@ -48,7 +48,7 @@ const reduceHeadings = (text) => text
     .replace(/^##\s+(.+)$/gm, '**$1**');     // Convert H2 to bold
 
 /**
- * Converts PR links, issue links, and changelog links to markdown format.
+ * Converts PR, issue, and changelog links to markdown format, ignoring existing markdown links.
  * - PR links: `https://github.com/OWNER/REPO/pull/1` -> `[PR #1](https://github.com/OWNER/REPO/pull/1)`
  * - Issue links: `https://github.com/OWNER/REPO/issues/1` -> `[Issue #30](https://github.com/OWNER/REPO/issues/1)`
  * - Changelog links: `https://github.com/OWNER/REPO/compare/v1.0.0...v1.1.0` -> `[v1.0.0...v1.1.0](https://github.com/OWNER/REPO/compare/v1.0.0...v1.1.0)`
@@ -56,25 +56,21 @@ const reduceHeadings = (text) => text
  * @returns {string} The text with links converted to markdown format.
  */
 const convertLinksToMarkdown = (text) => {
-    // Convert PR links
-    text = text.replace(
-        /https:\/\/github\.com\/([\w-]+)\/([\w-]+)\/pull\/(\d+)/g,
-        (match, owner, repo, prNumber) => `[PR #${prNumber}](${match})`
-    );
+    // Extract existing markdown links and replace them with placeholders
+    const markdownLinks = [];
+    const textWithoutMarkdownLinks = text.replace(/\[.*?\]\(.*?\)/g, (link) => {
+        markdownLinks.push(link);
+        return `__MARKDOWN_LINK_PLACEHOLDER_${markdownLinks.length - 1}__`;
+    });
 
-    // Convert issue links
-    text = text.replace(
-        /https:\/\/github\.com\/([\w-]+)\/([\w-]+)\/issues\/(\d+)/g,
-        (match, owner, repo, issueNumber) => `[Issue #${issueNumber}](${match})`
-    );
+    // Convert standalone PR, issue, and changelog URLs to markdown format
+    let processedText = textWithoutMarkdownLinks
+        .replace(/https:\/\/github\.com\/([\w-]+)\/([\w-]+)\/pull\/(\d+)/g, (match, owner, repo, prNumber) => `[PR #${prNumber}](${match})`)
+        .replace(/https:\/\/github\.com\/([\w-]+)\/([\w-]+)\/issues\/(\d+)/g, (match, owner, repo, issueNumber) => `[Issue #${issueNumber}](${match})`)
+        .replace(/https:\/\/github\.com\/([\w-]+)\/([\w-]+)\/compare\/([v\w.-]+)\.\.\.([v\w.-]+)/g, (match, owner, repo, fromVersion, toVersion) => `[${fromVersion}...${toVersion}](${match})`);
 
-    // Convert changelog comparison links
-    text = text.replace(
-        /https:\/\/github\.com\/([\w-]+)\/([\w-]+)\/compare\/([v\w.-]+)\.\.\.([v\w.-]+)/g,
-        (match, owner, repo, fromVersion, toVersion) => `[${fromVersion}...${toVersion}](${match})`
-    );
-
-    return text;
+    // Reinsert the original markdown links
+    return processedText.replace(/__MARKDOWN_LINK_PLACEHOLDER_(\d+)__/g, (match, index) => markdownLinks[parseInt(index, 10)]);
 };
 
 /**
