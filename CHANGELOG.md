@@ -1,5 +1,12 @@
 # Changelog
 
+## [1.15.2](https://github.com/SethCohen/github-releases-to-discord/compare/v1.15.1...v1.15.2) (2024-10-18)
+
+
+### Bug Fixes
+
+* improve [@mention](https://github.com/mention) parsing for GitHub usernames ([#33](https://github.com/SethCohen/github-releases-to-discord/issues/33)) ([925765f](https://github.com/SethCohen/github-releases-to-discord/commit/925765f099dcdc3b12316eaa6dc3c17506734b51))
+
 ## [1.15.1](https://github.com/SethCohen/github-releases-to-discord/compare/v1.15.0...v1.15.1) (2024-10-04)
 
 
