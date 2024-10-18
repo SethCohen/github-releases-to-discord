@@ -1,5 +1,12 @@
 # Changelog
 
+## [1.16.0](https://github.com/SethCohen/github-releases-to-discord/compare/v1.15.3...v1.16.0) (2024-10-18)
+
+
+### Features
+
+* add function to convert PR, issue, and changelog links to markdown format ([07c2e1c](https://github.com/SethCohen/github-releases-to-discord/commit/07c2e1c3e60591d601b5d4b5bd4fc90e599867f8)), closes [#32](https://github.com/SethCohen/github-releases-to-discord/issues/32)
+
 ## [1.15.3](https://github.com/SethCohen/github-releases-to-discord/compare/v1.15.2...v1.15.3) (2024-10-18)
 
 
