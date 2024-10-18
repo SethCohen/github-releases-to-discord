@@ -1,5 +1,17 @@
 # Changelog
 
+## [1.16.1](https://github.com/SethCohen/github-releases-to-discord/compare/v1.16.0...v1.16.1) (2024-10-18)
+
+
+### Bug Fixes
+
+* correct conversion of standalone PR, issue, and changelog URLs to markdown format ([4786949](https://github.com/SethCohen/github-releases-to-discord/commit/47869497ed80cf0d6188692d82d71dff7a55dffe)), closes [#38](https://github.com/SethCohen/github-releases-to-discord/issues/38)
+
+
+### Documentation
+
+* update README with details on markdown link conversion and other features ([9737dc9](https://github.com/SethCohen/github-releases-to-discord/commit/9737dc900274be227db48f8e23c715aa00b4af59))
+
 ## [1.16.0](https://github.com/SethCohen/github-releases-to-discord/compare/v1.15.3...v1.16.0) (2024-10-18)
 
 
