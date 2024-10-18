@@ -1,5 +1,19 @@
 # Changelog
 
+## [1.15.3](https://github.com/SethCohen/github-releases-to-discord/compare/v1.15.2...v1.15.3) (2024-10-18)
+
+
+### Documentation
+
+* add contribution guidelines to README.md ([5fd64bf](https://github.com/SethCohen/github-releases-to-discord/commit/5fd64bf266cea87ab4952ef9a4c6aaf099f266bc))
+* update version reference in README.md ([93d02ce](https://github.com/SethCohen/github-releases-to-discord/commit/93d02ce8714c5f3e201f5b379422e978b837774b))
+
+
+### Miscellaneous
+
+* update .gitignore ([3449e38](https://github.com/SethCohen/github-releases-to-discord/commit/3449e38629b0c40dde5af524e2fef220dab24ead))
+* update package-lock.json ([5dc4108](https://github.com/SethCohen/github-releases-to-discord/commit/5dc41089e63d18b5b191533c34cdddeab34a07e8))
+
 ## [1.15.2](https://github.com/SethCohen/github-releases-to-discord/compare/v1.15.1...v1.15.2) (2024-10-18)
 
 
