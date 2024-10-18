@@ -48,6 +48,36 @@ const reduceHeadings = (text) => text
     .replace(/^##\s+(.+)$/gm, '**$1**');     // Convert H2 to bold
 
 /**
+ * Converts PR links, issue links, and changelog links to markdown format.
+ * - PR links: `https://github.com/OWNER/REPO/pull/1` -> `[PR #1](https://github.com/OWNER/REPO/pull/1)`
+ * - Issue links: `https://github.com/OWNER/REPO/issues/1` -> `[Issue #30](https://github.com/OWNER/REPO/issues/1)`
+ * - Changelog links: `https://github.com/OWNER/REPO/compare/v1.0.0...v1.1.0` -> `[v1.0.0...v1.1.0](https://github.com/OWNER/REPO/compare/v1.0.0...v1.1.0)`
+ * @param {string} text The input text.
+ * @returns {string} The text with links converted to markdown format.
+ */
+const convertLinksToMarkdown = (text) => {
+    // Convert PR links
+    text = text.replace(
+        /https:\/\/github\.com\/([\w-]+)\/([\w-]+)\/pull\/(\d+)/g,
+        (match, owner, repo, prNumber) => `[PR #${prNumber}](${match})`
+    );
+
+    // Convert issue links
+    text = text.replace(
+        /https:\/\/github\.com\/([\w-]+)\/([\w-]+)\/issues\/(\d+)/g,
+        (match, owner, repo, issueNumber) => `[Issue #${issueNumber}](${match})`
+    );
+
+    // Convert changelog comparison links
+    text = text.replace(
+        /https:\/\/github\.com\/([\w-]+)\/([\w-]+)\/compare\/([v\w.-]+)\.\.\.([v\w.-]+)/g,
+        (match, owner, repo, fromVersion, toVersion) => `[${fromVersion}...${toVersion}](${match})`
+    );
+
+    return text;
+};
+
+/**
  * Stylizes a markdown body into an appropriate embed message style.
  * @param {string} description The description to format.
  * @returns {string} The formatted description.
@@ -57,6 +87,7 @@ const formatDescription = (description) => {
     edit = removeHTMLComments(edit);
     edit = reduceNewlines(edit);
     edit = convertMentionsToLinks(edit);
+    edit = convertLinksToMarkdown(edit);
     edit = edit.trim();
 
     if (core.getBooleanInput('reduce_headings')) {
