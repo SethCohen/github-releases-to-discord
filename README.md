@@ -16,7 +16,9 @@ A GitHub Action that sends a stylized Discord webhook containing the description
   - Optional message content outside the embed.
 
 ---
+
 ## Output
+
 ![output](https://i.imgur.com/Zf3TXtb.png)
 
 ## Configuration
@@ -37,6 +39,7 @@ A GitHub Action that sends a stylized Discord webhook containing the description
 ## Example Usage
 
 `.github/workflows/github-releases-to-discord.yml`
+
 ```yaml
 on:
   release:
@@ -64,14 +67,65 @@ jobs:
 ```
 
 ## Setup Instructions
+
 1. Open your **Server Settings** and head into the **Integrations** tab:
 2. Click the "**Create Webhook**" button to create a new webhook!
-   ![](https://support.discord.com/hc/article_attachments/1500000463501/Screen_Shot_2020-12-15_at_4.41.53_PM.png)
-   ![](https://support.discord.com/hc/article_attachments/360101553853/Screen_Shot_2020-12-15_at_4.51.38_PM.png)
+   ![create webhook](https://support.discord.com/hc/article_attachments/1500000463501/Screen_Shot_2020-12-15_at_4.41.53_PM.png)
+   ![created webhook](https://support.discord.com/hc/article_attachments/360101553853/Screen_Shot_2020-12-15_at_4.51.38_PM.png)
 3. Copy the webhook url
 4. Create a new GitHub repository secret called WEBHOOK_URL and paste the webhook url into it.
-   ![](https://i.imgur.com/hAaNOds.png)
+   ![repository secret](https://i.imgur.com/hAaNOds.png)
 5. Save the secret.
 6. Add the secret to your action configuration.
 
 And you're done! Whenever you create a new release, the workflow should run and, if properly setup, post to your specified Discord channel.
+
+## Contributing
+
+If you have suggestions for how GitHub Releases To Discord Action could be improved, or want to report a bug, open an issue! We'd love all and any contributions.
+
+1. Fork the repository.
+2. Install node and run `npm install`.
+3. Install [Github Action tester `act`](https://github.com/nektos/act)
+4. Create a sample test Release file to simulate a webhook payload object such as `tests/sample-test-release.json` with the following structure:
+  
+```json
+{
+  "action": "published",
+  "release": {
+      ...
+  },
+  "repository": {
+      ...
+  },
+  "sender": {
+      ...
+  }
+}
+```
+
+This file will be used to test the action locally and simulate a real release event webhook payload. Refer to the [GitHub Webhook documentation](https://docs.github.com/en/webhooks/webhook-events-and-payloads?actionType=published#release) and the [Github API Documentation](https://docs.github.com/en/rest/releases/releases?apiVersion=2022-11-28#get-a-release) for more information on the webhook payload structure.
+
+6. Fill the test json file with the necessary fields to simulate a release event.
+
+5. Create a test file called `.env` in the main root of the project with the following environmental variables:
+
+```bash
+  INPUT_WEBHOOK_URL=
+  INPUT_COLOR=
+  INPUT_USERNAME=
+  INPUT_AVATAR_URL=
+  INPUT_CONTENT=
+  INPUT_FOOTER_TITLE=
+  INPUT_FOOTER_ICON_URL=
+  INPUT_FOOTER_TIMESTAMP=
+  INPUT_MAX_DESCRIPTION=
+  INPUT_REDUCE_HEADINGS=
+```
+
+8. Fill the `.env` file with your chosen environmental variables values.
+9. Create a Discord webhook in your server, making sure to add the webhook url to the `.env` file under `INPUT_WEBHOOK_URL=`.
+10. Run the action locally with `act release -e <your.json>` (e.g. `act release -e tests/sample-test-release.json`) and check the output in your Discord server.
+11. Confirm that the action works as expected.
+12. Make your changes and commit them: `git commit -m '<commit_message>'`. Please follow [Conventional Commits](https://www.conventionalcommits.org/en/v1.0.0/).
+13. Create the pull request.
