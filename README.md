@@ -4,16 +4,24 @@ A GitHub Action that sends a stylized Discord webhook containing the description
 
 ## Features
 
-- Formats release descriptions by:
-  - Removing carriage returns and HTML comments.
-  - Styling headers for better readability in Discord (optional).
-  - Cleaning up redundant whitespace and newlines.
-  - Converting common GitHub links (e.g., PRs, Issues) into clickable URLs.
-- Limits description length to avoid exceeding Discord's character limits.
-- Provides customization for the Discord message, including:
-  - Webhook URL, message color, footer text/icon, and timestamp.
-  - Username and avatar for the webhook.
-  - Optional message content outside the embed.
+- **Text Cleanup:**
+  - **Carriage Return Removal:** Automatically removes carriage return characters for clean formatting.
+  - **HTML Comment Stripping:** Eliminates HTML comments to remove unnecessary information.
+  - **Whitespace Optimization:** Reduces redundant newlines and excess spaces while preserving proper paragraph spacing.
+- **Mention Conversion:** Converts GitHub mentions (e.g., `@username`) into clickable GitHub profile links for easy navigation.
+- **Markdown Link Conversion:**
+  - **PR Links:** Converts pull request URLs into Markdown links (e.g., `[PR #1](https://github.com/OWNER/REPO/pull/1)`).
+  - **Issue Links:** Converts issue URLs into Markdown links (e.g., `[Issue #1](https://github.com/OWNER/REPO/issues/1)`).
+  - **Changelog Links:** Converts changelog comparison URLs into concise Markdown links (e.g., `[v1.0.0...v1.1.0](https://github.com/OWNER/REPO/compare/v1.0.0...v1.1.0)`).
+- **Heading Reduction (Optional):** If enabled, it reduces heading sizes for a cleaner, more compact display:
+  - H3 headings are converted to bold and underlined.
+  - H2 headings are converted to bold.
+- **Description Length Management:** Ensures the release description fits within Discord's embed message limits (default 4096 characters), trimming excess text by cutting at newlines when possible or adding a continuation link.
+- **Custom Embed Appearance:**
+  - Set a custom color for the Discord embed message.
+  - Optionally include a custom footer with a title, icon, and a timestamp to make the notification more informative.
+- **Error Handling:** Provides clear error messages for any invalid or missing inputs, ensuring that the webhook action does not fail silently.
+- **Webhook Delivery:** Sends the formatted message to the specified Discord channel via webhook, ensuring your release notifications are promptly delivered with the correct details.
 
 ---
 
@@ -107,7 +115,6 @@ If you have suggestions for how GitHub Releases To Discord Action could be impro
 This file will be used to test the action locally and simulate a real release event webhook payload. Refer to the [GitHub Webhook documentation](https://docs.github.com/en/webhooks/webhook-events-and-payloads?actionType=published#release) and the [Github API Documentation](https://docs.github.com/en/rest/releases/releases?apiVersion=2022-11-28#get-a-release) for more information on the webhook payload structure.
 
 6. Fill the test json file with the necessary fields to simulate a release event.
-
 5. Create a test file called `.env` in the main root of the project with the following environmental variables:
 
 ```bash
@@ -125,7 +132,7 @@ This file will be used to test the action locally and simulate a real release ev
 
 8. Fill the `.env` file with your chosen environmental variables values.
 9. Create a Discord webhook in your server, making sure to add the webhook url to the `.env` file under `INPUT_WEBHOOK_URL=`.
-10. Run the action locally with `act release -e <your.json>` (e.g. `act release -e tests/sample-test-release.json`) and check the output in your Discord server.
+10. Run the action locally with `act release -e <your.json>` (e.g., `act release -e tests/sample-test-release.json`) and check the output in your Discord server.
 11. Confirm that the action works as expected.
 12. Make your changes and commit them: `git commit -m '<commit_message>'`. Please follow [Conventional Commits](https://www.conventionalcommits.org/en/v1.0.0/).
 13. Create the pull request.
