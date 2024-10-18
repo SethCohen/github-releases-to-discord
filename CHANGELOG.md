@@ -1,5 +1,12 @@
 # Changelog
 
+## [1.16.2](https://github.com/SethCohen/github-releases-to-discord/compare/v1.16.1...v1.16.2) (2024-10-18)
+
+
+### Documentation
+
+* update README output example ([6aa0dd9](https://github.com/SethCohen/github-releases-to-discord/commit/6aa0dd988c547f3b3a73463bc6e69d944621c613))
+
 ## [1.16.1](https://github.com/SethCohen/github-releases-to-discord/compare/v1.16.0...v1.16.1) (2024-10-18)
 
 
