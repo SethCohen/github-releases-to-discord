@@ -15,6 +15,7 @@ jobs:
           color: ${{ inputs.COLOR }}
           username: ${{ inputs.USERNAME }}
           avatar_url: ${{ inputs.AVATAR_URL }}
+          custom_html_url: ${{ inputs.CUSTOM_HTML_URL }}
           content: ${{ inputs.CONTENT }}
           footer_title: ${{ inputs.FOOTER_TITLE }}
           footer_icon_url: ${{ inputs.FOOTER_ICON_URL }}
