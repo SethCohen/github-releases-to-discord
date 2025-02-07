@@ -15,6 +15,9 @@ inputs:
   avatar_url:
     description: String url to webhook avatar picture.
     required: false
+  custom_html_url:
+    description: If filled, replaces github's release url with your custom html url.
+    required: false
   content:
     description: String content for webhook.
     required: false
