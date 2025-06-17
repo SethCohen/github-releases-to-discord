@@ -99,7 +99,7 @@ const formatDescription = (description) => {
     let edit = removeCarriageReturn(description);
     edit = removeHTMLComments(edit);
     edit = reduceNewlines(edit);
-        
+
     if (core.getBooleanInput('remove_github_reference_links')) {
         edit = removeGithubReferenceLinks(edit);
     }
@@ -276,3 +276,16 @@ const run = async () => {
 run()
     .then(() => core.info('Action completed successfully'))
     .catch(err => core.setFailed(err.message));
+
+// Export utility functions for testing
+export {
+    removeCarriageReturn,
+    removeHTMLComments,
+    reduceNewlines,
+    convertMentionsToLinks,
+    removeGithubReferenceLinks,
+    reduceHeadings,
+    convertLinksToMarkdown,
+    limitString,
+    formatDescription
+};
