@@ -10,6 +10,7 @@ A GitHub Action that sends a stylized Discord webhook containing the description
   - **Whitespace Optimization:** Reduces redundant newlines and excess spaces while preserving proper paragraph spacing.
 - **Mention Conversion:** Converts GitHub mentions (e.g., `@username`) into clickable GitHub profile links for easy navigation.
 - **Markdown Link Conversion:**
+- **Link Removal (Optional):** Remove PR and commit links from the changelog.
   - **PR Links:** Converts pull request URLs into Markdown links (e.g., `[PR #1](https://github.com/OWNER/REPO/pull/1)`).
   - **Issue Links:** Converts issue URLs into Markdown links (e.g., `[Issue #1](https://github.com/OWNER/REPO/issues/1)`).
   - **Changelog Links:** Converts changelog comparison URLs into concise Markdown links (e.g., `[v1.0.0...v1.1.0](https://github.com/OWNER/REPO/compare/v1.0.0...v1.1.0)`).
@@ -42,6 +43,7 @@ A GitHub Action that sends a stylized Discord webhook containing the description
 | footer_icon_url | ❌       |                                                                                                       | String url for the webhook footer picture.      |
 | footer_timestamp| ❌       |                                                                                                       | Boolean to enable footer timestamp.             |
 | max_description | ❌       | "4096"                                                                                                | Max length for the description.                 |
+| remove_pr_commit_links | ❌       | false                                                     | Remove PR and commit links from the description.    |
 | reduce_headings | ❌       | false                                                                                                 | Converts H3 to bold, h2 to bold & underline.    |
 
 ## Example Usage
@@ -71,6 +73,7 @@ jobs:
           footer_icon_url: "https://cdn.discordapp.com/avatars/487431320314576937/bd64361e4ba6313d561d54e78c9e7171.png"
           footer_timestamp: true
           max_description: '4096'
+          remove_pr_commit_links: true
           reduce_headings: true
 ```
 

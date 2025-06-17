@@ -38,6 +38,15 @@ const convertMentionsToLinks = (text) => text.replace(
 );
 
 /**
+ * Removes PR and commit links from the text.
+ * @param {string} text The input text.
+ * @returns {string} The text without PR and commit links.
+ */
+const removePrCommitLinks = (text) => text
+    .replace(/https:\/\/github\.com\/[^\s)]+\/pull\/\d+/g, '')
+    .replace(/https:\/\/github\.com\/[^\s)]+\/commit\/\w+/g, '');
+
+/**
  * Reduces headings to a smaller format if 'reduce_headings' is enabled.
  * Converts H3 to bold+underline, H2 to bold.
  * @param {string} text The input text.
@@ -82,6 +91,9 @@ const formatDescription = (description) => {
     let edit = removeCarriageReturn(description);
     edit = removeHTMLComments(edit);
     edit = reduceNewlines(edit);
+    if (core.getBooleanInput('remove_pr_commit_links')) {
+        edit = removePrCommitLinks(edit);
+    }
     edit = convertMentionsToLinks(edit);
     edit = convertLinksToMarkdown(edit);
     edit = edit.trim();
