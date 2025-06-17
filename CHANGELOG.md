@@ -1,5 +1,18 @@
 # Changelog
 
+## [1.19.0](https://github.com/SethCohen/github-releases-to-discord/compare/v1.18.0...v1.19.0) (2025-06-17)
+
+
+### Features
+
+* **tests:** add Jest configuration and comprehensive tests for utility functions in index.js to ensure functionality and reliability ([0559b87](https://github.com/SethCohen/github-releases-to-discord/commit/0559b87ee8fad6482e7ed4431329fd22f6593a9a))
+
+
+### Miscellaneous
+
+* added updated dependencies ([067d2cb](https://github.com/SethCohen/github-releases-to-discord/commit/067d2cb017f609a202547b5dbb457d91cfb6cf0c))
+* **package:** update @actions/github dependency to version 6.0.1 and add Jest as a dev dependency with a test script ([0559b87](https://github.com/SethCohen/github-releases-to-discord/commit/0559b87ee8fad6482e7ed4431329fd22f6593a9a))
+
 ## [1.18.0](https://github.com/SethCohen/github-releases-to-discord/compare/v1.17.0...v1.18.0) (2025-06-17)
 
 
