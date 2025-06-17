@@ -202,21 +202,42 @@ const buildEmbedMessage = (name, html_url, description) => {
 };
 
 /**
- * Sends the webhook request to Discord.
+ * Sends the webhook request to Discord, handling rate limits (429) with retries.
  * @param {string} webhookUrl The URL of the Discord webhook.
  * @param {object} requestBody The payload to send in the webhook.
+ * @param {number} [maxRetries=3] Maximum number of retries on rate limit.
  */
-const sendWebhook = async (webhookUrl, requestBody) => {
-    try {
-        const response = await fetch(`${webhookUrl}?wait=true`, {
-            method: 'POST',
-            body: JSON.stringify(requestBody),
-            headers: { 'Content-Type': 'application/json' }
-        });
-        const data = await response.json();
-        core.info(JSON.stringify(data));
-    } catch (err) {
-        core.setFailed(err.message);
+const sendWebhook = async (webhookUrl, requestBody, maxRetries = 3) => {
+    let attempt = 0;
+    while (attempt <= maxRetries) {
+        try {
+            const response = await fetch(`${webhookUrl}?wait=true`, {
+                method: 'POST',
+                body: JSON.stringify(requestBody),
+                headers: { 'Content-Type': 'application/json' }
+            });
+            if (response.status === 429) {
+                // Rate limited, get retry-after
+                const retryAfter = parseInt(response.headers.get('retry-after') || '1', 10);
+                core.warning(`Rate limited by Discord. Retrying after ${retryAfter} seconds (attempt ${attempt + 1}/${maxRetries})`);
+                await new Promise(res => setTimeout(res, retryAfter * 1000));
+                attempt++;
+                continue;
+            }
+            const data = await response.json();
+            if (!response.ok) {
+                core.setFailed(`Discord webhook error: ${JSON.stringify(data)}`);
+            } else {
+                core.info(JSON.stringify(data));
+            }
+            break;
+        } catch (err) {
+            core.setFailed(err.message);
+            break;
+        }
+    }
+    if (attempt > maxRetries) {
+        core.setFailed('Exceeded maximum Discord webhook retry attempts due to rate limiting.');
     }
 };
 
