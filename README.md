@@ -38,6 +38,7 @@ A GitHub Action that sends a stylized Discord webhook containing the description
 | color           | ❌       | "2105893"                                                                                             | Decimal color value for embed.                  |
 | username        | ❌       |                                                                                                       | String username for webhook.                    |
 | avatar_url      | ❌       |                                                                                                       | String url to webhook avatar picture.           |
+| custom_html_url | ❌       |                                                                                                       | Replace github release url with custom url      |
 | content         | ❌       |                                                                                                       | String content for webhook.                     |
 | footer_title    | ❌       |                                                                                                       | String title for the webhook footer.            |
 | footer_icon_url | ❌       |                                                                                                       | String url for the webhook footer picture.      |
@@ -68,6 +69,7 @@ jobs:
           color: "2105893"
           username: "Release Changelog"
           avatar_url: "https://cdn.discordapp.com/avatars/487431320314576937/bd64361e4ba6313d561d54e78c9e7171.png"
+          custom_html_url: "www.google.com"
           content: "||@everyone||"
           footer_title: "Changelog"
           footer_icon_url: "https://cdn.discordapp.com/avatars/487431320314576937/bd64361e4ba6313d561d54e78c9e7171.png"
