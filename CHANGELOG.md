@@ -1,5 +1,12 @@
 # Changelog
 
+## [1.17.0](https://github.com/SethCohen/github-releases-to-discord/compare/v1.16.2...v1.17.0) (2025-06-17)
+
+
+### Features
+
+* **workflow:** add GitHub Actions workflow to automatically update SemVer tags on tag push events ([e768ce1](https://github.com/SethCohen/github-releases-to-discord/commit/e768ce10237a6100cccd7e80b2e994e9a2609150))
+
 ## [1.16.2](https://github.com/SethCohen/github-releases-to-discord/compare/v1.16.1...v1.16.2) (2024-10-18)
 
 
