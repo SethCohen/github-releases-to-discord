@@ -43,7 +43,7 @@ A GitHub Action that sends a stylized Discord webhook containing the description
 | footer_icon_url | ❌       |                                                                                                       | String url for the webhook footer picture.      |
 | footer_timestamp| ❌       |                                                                                                       | Boolean to enable footer timestamp.             |
 | max_description | ❌       | "4096"                                                                                                | Max length for the description.                 |
-| remove_pr_commit_links | ❌       | false                                                     | Remove PR and commit links from the description.    |
+| remove_github_reference_links | ❌       | false                                                     | Remove any PR, commit, and issue links from the description.    |
 | reduce_headings | ❌       | false                                                                                                 | Converts H3 to bold, h2 to bold & underline.    |
 
 ## Example Usage
@@ -73,7 +73,7 @@ jobs:
           footer_icon_url: "https://cdn.discordapp.com/avatars/487431320314576937/bd64361e4ba6313d561d54e78c9e7171.png"
           footer_timestamp: true
           max_description: '4096'
-          remove_pr_commit_links: true
+          remove_github_reference_links: true
           reduce_headings: true
 ```
 

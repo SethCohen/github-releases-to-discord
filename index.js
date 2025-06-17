@@ -38,13 +38,21 @@ const convertMentionsToLinks = (text) => text.replace(
 );
 
 /**
- * Removes PR and commit links from the text.
+ * Removes any GitHub PR, commit, or issue links from the text, including markdown links.
  * @param {string} text The input text.
- * @returns {string} The text without PR and commit links.
+ * @returns {string} The text without GitHub PR and commit links.
  */
-const removePrCommitLinks = (text) => text
-    .replace(/https:\/\/github\.com\/[^\s)]+\/pull\/\d+/g, '')
-    .replace(/https:\/\/github\.com\/[^\s)]+\/commit\/\w+/g, '');
+const removeGithubReferenceLinks = (text) => text
+    // Remove markdown links to PRs, commits, and issues
+    .replace(/\[[^\]]*\]\(https:\/\/github\.com\/[^(\s)]+\/pull\/\d+\)/g, '')
+    .replace(/\[[^\]]*\]\(https:\/\/github\.com\/[^(\s)]+\/commit\/\w+\)/g, '')
+    .replace(/\[[^\]]*\]\(https:\/\/github\.com\/[^(\s)]+\/issues\/\d+\)/g, '')
+    // Remove bare PR, commit, and issue URLs
+    .replace(/https:\/\/github\.com\/[^(\s)]+\/pull\/\d+/g, '')
+    .replace(/https:\/\/github\.com\/[^(\s)]+\/commit\/\w+/g, '')
+    .replace(/https:\/\/github\.com\/[^(\s)]+\/issues\/\d+/g, '')
+    // Remove empty parentheses left behind
+    .replace(/\(\s*\)/g, '');
 
 /**
  * Reduces headings to a smaller format if 'reduce_headings' is enabled.
@@ -91,8 +99,9 @@ const formatDescription = (description) => {
     let edit = removeCarriageReturn(description);
     edit = removeHTMLComments(edit);
     edit = reduceNewlines(edit);
-    if (core.getBooleanInput('remove_pr_commit_links')) {
-        edit = removePrCommitLinks(edit);
+        
+    if (core.getBooleanInput('remove_github_reference_links')) {
+        edit = removeGithubReferenceLinks(edit);
     }
     edit = convertMentionsToLinks(edit);
     edit = convertLinksToMarkdown(edit);
