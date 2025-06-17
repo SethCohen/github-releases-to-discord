@@ -1,5 +1,18 @@
 # Changelog
 
+## [1.18.0](https://github.com/SethCohen/github-releases-to-discord/compare/v1.17.0...v1.18.0) (2025-06-17)
+
+
+### Features
+
+* **index.js:** enhance sendWebhook function to handle rate limits with retries for improved reliability when sending requests to Discord ([feb5a40](https://github.com/SethCohen/github-releases-to-discord/commit/feb5a402377bc3da9cb9ea788964ece4e56f48cd))
+
+
+### Miscellaneous
+
+* remove unnecessary test file from .gitignore and add sample test release JSON for local testing ([82d906c](https://github.com/SethCohen/github-releases-to-discord/commit/82d906cc6f29adbe413b3f26b55deafc3f08ceee))
+* update README for clarity and conciseness, improve formatting, and add new sections for better user guidance ([82d906c](https://github.com/SethCohen/github-releases-to-discord/commit/82d906cc6f29adbe413b3f26b55deafc3f08ceee))
+
 ## [1.17.0](https://github.com/SethCohen/github-releases-to-discord/compare/v1.16.2...v1.17.0) (2025-06-17)
 
 
