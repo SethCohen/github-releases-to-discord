@@ -3,7 +3,6 @@
 out
 gen
 .env
-tests/sample-test-release.json
 release.json
 repository.json
 user.json

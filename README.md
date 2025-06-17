@@ -1,55 +1,49 @@
-# GitHub Releases To Discord Action
+# GitHub Releases to Discord Action
 
-A GitHub Action that sends a stylized Discord webhook containing the description of a GitHub Release to a specified Discord channel. It formats the description to improve readability and includes various configuration options to customize the message.
+Easily notify your Discord community about new GitHub releases! This GitHub Action automatically sends a beautifully formatted Discord embed message with your release notes whenever you publish a release on GitHub.
 
-## Features
+**Main Benefits:**
 
-- **Text Cleanup:**
-  - **Carriage Return Removal:** Automatically removes carriage return characters for clean formatting.
-  - **HTML Comment Stripping:** Eliminates HTML comments to remove unnecessary information.
-  - **Whitespace Optimization:** Reduces redundant newlines and excess spaces while preserving proper paragraph spacing.
-- **Mention Conversion:** Converts GitHub mentions (e.g., `@username`) into clickable GitHub profile links for easy navigation.
-- **Markdown Link Conversion:**
-- **Link Removal (Optional):** Remove PR and commit links from the changelog.
-  - **PR Links:** Converts pull request URLs into Markdown links (e.g., `[PR #1](https://github.com/OWNER/REPO/pull/1)`).
-  - **Issue Links:** Converts issue URLs into Markdown links (e.g., `[Issue #1](https://github.com/OWNER/REPO/issues/1)`).
-  - **Changelog Links:** Converts changelog comparison URLs into concise Markdown links (e.g., `[v1.0.0...v1.1.0](https://github.com/OWNER/REPO/compare/v1.0.0...v1.1.0)`).
-- **Heading Reduction (Optional):** If enabled, it reduces heading sizes for a cleaner, more compact display:
-  - H3 headings are converted to bold and underlined.
-  - H2 headings are converted to bold.
-- **Description Length Management:** Ensures the release description fits within Discord's embed message limits (default 4096 characters), trimming excess text by cutting at newlines when possible or adding a continuation link.
-- **Custom Embed Appearance:**
-  - Set a custom color for the Discord embed message.
-  - Optionally include a custom footer with a title, icon, and a timestamp to make the notification more informative.
-- **Error Handling:** Provides clear error messages for any invalid or missing inputs, ensuring that the webhook action does not fail silently.
-- **Webhook Delivery:** Sends the formatted message to the specified Discord channel via webhook, ensuring your release notifications are promptly delivered with the correct details.
+- Instantly share release changelogs with your Discord server.
+- Highly customizable message appearance and content.
+- Simple setup—no coding required.
+- Supports advanced formatting and filtering for professional notifications.
 
 ---
 
-## Output
+## Features
 
-![output](https://i.imgur.com/ovr0gTL.png)
+- **Automatic Release Notifications:** Sends a Discord embed when a GitHub release is published.
+- **Clean Formatting:**
+  - Removes carriage returns and HTML comments.
+  - Optimizes whitespace and paragraph spacing.
+- **Mention & Link Handling:**
+  - Converts `@mentions` to clickable GitHub profile links.
+  - Converts PR, issue, and changelog URLs to Markdown links.
+  - Optionally removes PR, commit, and issue links for cleaner messages.
+- **Heading Reduction:**
+  - Optionally reduces heading sizes for compact display.
+- **Custom Embed Appearance:**
+  - Set color, username, avatar, footer, and more.
+- **Length Management:**
+  - Ensures messages fit Discord's embed limits, trimming and linking as needed.
+- **Error Handling:**
+  - Clear errors for missing or invalid inputs.
+- **Easy Integration:**
+  - Works with any public or private repository.
 
-## Configuration
+---
 
-| Variable        | Required | Default                                                                                               | Description                                     |
-|-----------------|----------|-------------------------------------------------------------------------------------------------------|-------------------------------------------------|
-| webhook_url     | ✔        |                                                                                                       | Discord's webhook url. Use GH repo secrets.     |
-| color           | ❌       | "2105893"                                                                                             | Decimal color value for embed.                  |
-| username        | ❌       |                                                                                                       | String username for webhook.                    |
-| avatar_url      | ❌       |                                                                                                       | String url to webhook avatar picture.           |
-| custom_html_url | ❌       |                                                                                                       | Replace github release url with custom url      |
-| content         | ❌       |                                                                                                       | String content for webhook.                     |
-| footer_title    | ❌       |                                                                                                       | String title for the webhook footer.            |
-| footer_icon_url | ❌       |                                                                                                       | String url for the webhook footer picture.      |
-| footer_timestamp| ❌       |                                                                                                       | Boolean to enable footer timestamp.             |
-| max_description | ❌       | "4096"                                                                                                | Max length for the description.                 |
-| remove_github_reference_links | ❌       | false                                                     | Remove any PR, commit, and issue links from the description.    |
-| reduce_headings | ❌       | false                                                                                                 | Converts H3 to bold, h2 to bold & underline.    |
+## Quick Start
 
-## Example Usage
+### 1. Create a Discord Webhook
 
-`.github/workflows/github-releases-to-discord.yml`
+- Go to your Discord server settings → **Integrations** → **Webhooks**.
+- Click **Create Webhook** and copy the webhook URL.
+
+### 2. Add the Action to Your Workflow
+
+Create (or update) `.github/workflows/github-releases-to-discord.yml`:
 
 ```yaml
 on:
@@ -62,82 +56,127 @@ jobs:
     steps:
       - name: Checkout
         uses: actions/checkout@v3
-      - name: Github Releases To Discord
+      - name: GitHub Releases to Discord
         uses: SethCohen/github-releases-to-discord@v1
         with:
           webhook_url: ${{ secrets.WEBHOOK_URL }}
           color: "2105893"
           username: "Release Changelog"
           avatar_url: "https://cdn.discordapp.com/avatars/487431320314576937/bd64361e4ba6313d561d54e78c9e7171.png"
-          custom_html_url: "www.google.com"
           content: "||@everyone||"
           footer_title: "Changelog"
-          footer_icon_url: "https://cdn.discordapp.com/avatars/487431320314576937/bd64361e4ba6313d561d54e78c9e7171.png"
-          footer_timestamp: true
-          max_description: '4096'
-          remove_github_reference_links: true
           reduce_headings: true
 ```
 
-## Setup Instructions
+### 3. Add Your Webhook URL as a Secret
 
-1. Open your **Server Settings** and head into the **Integrations** tab:
-2. Click the "**Create Webhook**" button to create a new webhook!
-   ![create webhook](https://support.discord.com/hc/article_attachments/1500000463501/Screen_Shot_2020-12-15_at_4.41.53_PM.png)
-   ![created webhook](https://support.discord.com/hc/article_attachments/360101553853/Screen_Shot_2020-12-15_at_4.51.38_PM.png)
-3. Copy the webhook url
-4. Create a new GitHub repository secret called WEBHOOK_URL and paste the webhook url into it.
-   ![repository secret](https://i.imgur.com/hAaNOds.png)
-5. Save the secret.
-6. Add the secret to your action configuration.
+- In your GitHub repo, go to **Settings → Secrets and variables → Actions**.
+- Add a new secret named `WEBHOOK_URL` and paste your Discord webhook URL.
 
-And you're done! Whenever you create a new release, the workflow should run and, if properly setup, post to your specified Discord channel.
+---
+
+## Configuration Options
+
+| Input Name                    | Required | Default     | Description                                                        |
+|-------------------------------|----------|-------------|--------------------------------------------------------------------|
+| `webhook_url`                 | ✔        |             | Discord webhook URL (use a GitHub secret).                         |
+| `color`                       | ❌       | 2105893     | Embed color (decimal).                                             |
+| `username`                    | ❌       |             | Webhook username.                                                  |
+| `avatar_url`                  | ❌       |             | Webhook avatar image URL.                                          |
+| `custom_html_url`             | ❌       |             | Custom URL for the embed title (overrides GitHub release URL).     |
+| `content`                     | ❌       |             | Additional message content (e.g., `@everyone`).                    |
+| `footer_title`                | ❌       |             | Footer title.                                                      |
+| `footer_icon_url`             | ❌       |             | Footer icon image URL.                                             |
+| `footer_timestamp`            | ❌       | false       | Show timestamp in footer (`true`/`false`).                         |
+| `max_description`             | ❌       | 4096        | Max description length (Discord limit: 4096).                      |
+| `remove_github_reference_links`| ❌      | false       | Remove PR, commit, and issue links from the description.           |
+| `reduce_headings`             | ❌       | false       | Reduce heading sizes for compact display.                          |
+
+---
+
+## Example Output
+
+![Discord Embed Example](https://i.imgur.com/ovr0gTL.png)
+
+---
+
+## Best Practices & Notes
+
+- **Use Secrets for Webhook URLs:** Never commit your Discord webhook URL directly to your repository.
+- **Discord Embed Limits:**
+  - Title: 256 characters max
+  - Description: 4096 characters max
+  - The action will trim and link if limits are exceeded.
+- **Release Body Formatting:**
+  - Use Markdown in your release notes for best results.
+- **Private Repos:**
+  - The action works for both public and private repositories.
+
+---
+
+## Troubleshooting & FAQ
+
+**Q: The action didn't post to Discord!**
+
+- Check that your webhook URL is correct and not expired.
+- Ensure the `webhook_url` secret is set in your repository.
+- Review the Actions log for error messages.
+
+**Q: My message is cut off.**
+
+- Discord has strict embed limits. The action trims long messages and adds a link if needed.
+
+**Q: How do I customize the embed?**
+
+- Use the configuration options above to set color, username, avatar, footer, and more.
+
+**Q: Can I mention everyone or specific roles?**
+
+- Use the `content` input (e.g., `content: "@everyone"`).
+
+---
 
 ## Contributing
 
-If you have suggestions for how GitHub Releases To Discord Action could be improved, or want to report a bug, open an issue! We'd love all and any contributions.
+We welcome contributions! To get started:
 
-1. Fork the repository.
-2. Install node and run `npm install`.
-3. Install [Github Action tester `act`](https://github.com/nektos/act)
-4. Create a sample test Release file to simulate a webhook payload object such as `tests/sample-test-release.json` with the following structure:
-  
-```json
-{
-  "action": "published",
-  "release": {
-      ...
-  },
-  "repository": {
-      ...
-  },
-  "sender": {
-      ...
-  }
-}
-```
+1. **Fork** this repository.
+2. **Clone** your fork and run `npm install`.
+3. **Create a test release payload:**
+   - Copy `tests/sample-test-release.json` and edit as needed.
+4. **Create a `.env` file** in the root with your webhook and config (see below):
 
-This file will be used to test the action locally and simulate a real release event webhook payload. Refer to the [GitHub Webhook documentation](https://docs.github.com/en/webhooks/webhook-events-and-payloads?actionType=published#release) and the [Github API Documentation](https://docs.github.com/en/rest/releases/releases?apiVersion=2022-11-28#get-a-release) for more information on the webhook payload structure.
+   ```env
+   INPUT_WEBHOOK_URL=your_webhook_url
+   INPUT_COLOR=2105893
+   ...
+   ```
 
-6. Fill the test json file with the necessary fields to simulate a release event.
-5. Create a test file called `.env` in the main root of the project with the following environmental variables:
+5. **Test locally** with [`act`](https://github.com/nektos/act):
 
-```bash
-  INPUT_WEBHOOK_URL=
-  INPUT_COLOR=
-  INPUT_USERNAME=
-  INPUT_AVATAR_URL=
-  INPUT_CONTENT=
-  INPUT_FOOTER_TITLE=
-  INPUT_FOOTER_ICON_URL=
-  INPUT_FOOTER_TIMESTAMP=
-  INPUT_MAX_DESCRIPTION=
-  INPUT_REDUCE_HEADINGS=
-```
+   ```bash
+   act release -e tests/sample-test-release.json
+   ```
 
-8. Fill the `.env` file with your chosen environmental variables values.
-9. Create a Discord webhook in your server, making sure to add the webhook url to the `.env` file under `INPUT_WEBHOOK_URL=`.
-10. Run the action locally with `act release -e <your.json>` (e.g., `act release -e tests/sample-test-release.json`) and check the output in your Discord server.
-11. Confirm that the action works as expected.
-12. Make your changes and commit them: `git commit -m '<commit_message>'`. Please follow [Conventional Commits](https://www.conventionalcommits.org/en/v1.0.0/).
-13. Create the pull request.
+6. **Make your changes** and commit using [Conventional Commits](https://www.conventionalcommits.org/en/v1.0.0/).
+7. **Open a pull request** with a clear description of your changes.
+
+---
+
+## License
+
+[MIT License](LICENSE)
+
+---
+
+## Support & Feedback
+
+- **Issues:** [Open an issue](https://github.com/SethCohen/github-releases-to-discord/issues) for bugs, questions, or feature requests.
+- **Pull Requests:** Contributions are welcome—see above!
+
+---
+
+## Acknowledgements
+
+- Inspired by the needs of open source maintainers and Discord communities.
+- Built and maintained by [SethCohen](https://github.com/SethCohen).
