@@ -165,9 +165,8 @@ const buildEmbedMessage = (name, html_url, description) => {
     };
 
     if (core.getInput('custom_html_url')) {
-        embedMsg.html_url = core.getInput('custom_html_url');
+        embedMsg.url = core.getInput('custom_html_url');
     }
-
     if (core.getInput('footer_title')) {
         embedMsg.footer.text = limitString(core.getInput('footer_title'), 2048);
     }
