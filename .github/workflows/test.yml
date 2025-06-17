@@ -21,4 +21,4 @@ jobs:
           footer_timestamp: ${{ inputs.FOOTER_TIMESTAMP }}
           max_description: ${{ inputs.MAX_DESCRIPTION }}
           reduce_headings: ${{ inputs.REDUCE_HEADINGS }}
-          
+          remove_github_reference_links: ${{ inputs.REMOVE_GITHUB_REFERENCE_LINKS }}
