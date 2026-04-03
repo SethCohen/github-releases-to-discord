@@ -1,5 +1,14 @@
 # Changelog
 
+## [1.20.0](https://github.com/SethCohen/github-releases-to-discord/compare/v1.19.0...v1.20.0) (2026-04-03)
+
+
+### Features
+
+* add manual dispatch support for GitHub Actions to test Discord webhook integration with optional release inputs. resolves [#52](https://github.com/SethCohen/github-releases-to-discord/issues/52) ([e15eb81](https://github.com/SethCohen/github-releases-to-discord/commit/e15eb81a91d940818d60143a1f57edb92ae0828c))
+* enhance reduceHeadings function to handle indented and closed markdown headings and add tests for new functionality. resolves [#51](https://github.com/SethCohen/github-releases-to-discord/issues/51) ([80aca15](https://github.com/SethCohen/github-releases-to-discord/commit/80aca15d7235082187d6eee6054a69ceed9c45db))
+* **tests:** add test for handling release payload with null body and update formatDescription to handle undefined input. resolves [#53](https://github.com/SethCohen/github-releases-to-discord/issues/53) ([60ef92f](https://github.com/SethCohen/github-releases-to-discord/commit/60ef92f1479987b509687244b04859040cb0f43d))
+
 ## [1.19.0](https://github.com/SethCohen/github-releases-to-discord/compare/v1.18.0...v1.19.0) (2025-06-17)
 
 
